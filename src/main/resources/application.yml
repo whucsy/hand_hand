@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/hand_hand
+    url: jdbc:mysql://localhost:3306/hand_hand?useUnicode=true&characterEncoding=utf8
+#    加上问号后面的防止数据库防止乱码
     username: root
     password: 230040
     driver-class-name: com.mysql.cj.jdbc.Driver

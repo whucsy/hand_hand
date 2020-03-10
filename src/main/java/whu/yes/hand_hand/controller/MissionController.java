@@ -2,8 +2,12 @@ package whu.yes.hand_hand.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import whu.yes.hand_hand.entity.Mission;
 import whu.yes.hand_hand.service.MissionService;
@@ -65,5 +69,18 @@ public class MissionController {
          missionService.deleteMission(mid);
     }
 
+    @GetMapping(value = "/page")
+    @ApiOperation(
+            value = "分页查询任务",
+            notes = "根据页数和大小查询任务"
+    )
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "页数", name = "page",paramType = "query"),
+            @ApiImplicitParam(value = "每页大小", name = "size",paramType = "query"),
+    }
+    )
+    public Page<Mission> findByPage(@RequestParam("page")Integer page,@RequestParam("size") Integer size){
+        return missionService.findByPage(page-1,size);
+    }
 
 }
