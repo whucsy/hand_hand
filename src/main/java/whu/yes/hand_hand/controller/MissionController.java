@@ -69,6 +69,7 @@ public class MissionController {
          missionService.deleteMission(mid);
     }
 
+
     @GetMapping(value = "/page")
     @ApiOperation(
             value = "分页查询任务",
@@ -77,10 +78,14 @@ public class MissionController {
     @ApiImplicitParams({
             @ApiImplicitParam(value = "页数", name = "page",paramType = "query"),
             @ApiImplicitParam(value = "每页大小", name = "size",paramType = "query"),
+            @ApiImplicitParam(value = "标签", name = "label",paramType = "query"),
     }
     )
-    public Page<Mission> findByPage(@RequestParam("page")Integer page,@RequestParam("size") Integer size){
-        return missionService.findByPage(page-1,size);
+    public List<Mission> findByPage(@RequestParam("page")Integer page,
+                                    @RequestParam("size") Integer size,
+                                    @RequestParam("label") String label){
+
+        return missionService.findByPage(page-1,size,label);
     }
 
 }

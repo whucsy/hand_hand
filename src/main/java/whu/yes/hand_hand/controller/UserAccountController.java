@@ -2,9 +2,11 @@ package whu.yes.hand_hand.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import whu.yes.hand_hand.entity.Mission;
 import whu.yes.hand_hand.entity.UserAccount;
 import whu.yes.hand_hand.service.UserAccountService;
 
@@ -62,5 +64,16 @@ public class UserAccountController {
     @ApiImplicitParam(value = "账号",name = "uid",paramType = "query")
     public void deleteAccountById(@RequestParam("uid") int id){
         userAccountService.deleteAccount(id);
+    }
+
+    @GetMapping(value = "/rank")
+    @ApiOperation(
+            value = "按积分排行",
+            notes = "根据积分降序排行"
+    )
+    @ApiImplicitParam(value = "排名的人数", name = "size",paramType = "query")
+
+    public List<UserAccount> rankByScore(@RequestParam("size") Integer size){
+        return userAccountService.rankByScore(size);
     }
 }

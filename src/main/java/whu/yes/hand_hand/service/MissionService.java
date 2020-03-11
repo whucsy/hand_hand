@@ -42,12 +42,20 @@ public class MissionService {
     }
 
     //分页查找
-    public Page<Mission> findByPage(Integer page, Integer size) {
-        if (null == page) {
+    public List<Mission> findByPage(Integer page, Integer size,String label) {
+        if(page == null){
             page = 0;
         }
         PageRequest pageable = PageRequest.of(page, size, Sort.Direction.DESC, "publishTime");
-        Page<Mission> missions = missionRepository.findAll(pageable);
-        return missions;
+        if (null == label) {
+            return missionRepository.findByPage(pageable);
+        }
+        else {
+            return missionRepository.findByPageAndLabel(pageable, label);
+        }
     }
+
+
+
+
 }
