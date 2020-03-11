@@ -1,6 +1,8 @@
 package whu.yes.hand_hand.entity;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -13,28 +15,39 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@ApiModel(value="用户信息对象",description="用户信息对象")
 public class UserInfo {
     @Id
+    @ApiModelProperty(value="用户账号",name="uid")
     int uid;
 
-    String realName; //真实姓名
+    @ApiModelProperty(value="真实姓名",name="realName")
+    String realName;
 
-    String idNumber; //身份证
+    @ApiModelProperty(value="身份证",name="idNumber")
+    String idNumber;
 
-    int age;//年龄
+    @ApiModelProperty(value="年龄",name="age")
+    int age;
 
-    String school; //学校
+    @ApiModelProperty(value="学校",name="school")
+    String school;
 
-    String stuentNo;//学号
+    @ApiModelProperty(value="学号",name="stuentNo")
+    String stuentNo;
 
-    String education; //学历
+    @ApiModelProperty(value="学历",name="education")
+    String education;
 
-    String company; //公司
+    @ApiModelProperty(value="公司",name="company")
+    String company;
 
-    String location;//位置
+    @ApiModelProperty(value="位置",name="location")
+    String location;
 
-    String address; //地址
+    @ApiModelProperty(value="地址",name="address")
+    String address;
 
-    int userType; //用户类型
+    @ApiModelProperty(value="用户类型",name="userType")
+    int userType;
 }

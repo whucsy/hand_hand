@@ -2,10 +2,12 @@ package whu.yes.hand_hand.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import whu.yes.hand_hand.entity.ReceiveList;
+import whu.yes.hand_hand.entity.UserAccount;
 import whu.yes.hand_hand.service.ReceiveListService;
 
 import java.util.List;
@@ -63,5 +65,33 @@ public class ReceiveListController {
     @ApiImplicitParam(value = "接收列表id", name = "id",paramType = "query",dataType = "int")
     public void deleteReceiveListById(@RequestParam("id") int id){
         receiveListService.deleteReceiveList(id);
+    }
+
+
+    @PostMapping(value = "/compete")
+    @ApiOperation(
+            value = "添加竞争者",
+            notes = "根据uid和mid添加竞争者"
+    )
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "任务号", name = "mid",paramType = "query"),
+            @ApiImplicitParam(value = "账号", name = "uid",paramType = "query"),
+    }
+    )
+    public void insertCompetitor(@RequestParam("mid")Integer mid,
+                           @RequestParam("uid") Integer uid){
+        receiveListService.insertCompetitor(uid,mid);
+    }
+
+    @GetMapping(value = "/competitor")
+    @ApiOperation(
+            value = "根据任务id查询竞选人",
+            notes = "根据任务id查询竞选人"
+    )
+
+    @ApiImplicitParam(value = "任务id", name = "mid",paramType = "query")
+
+    public List<UserAccount> findCompetitor(@RequestParam("mid")Integer mid){
+        return receiveListService.findCompetitor(mid);
     }
 }

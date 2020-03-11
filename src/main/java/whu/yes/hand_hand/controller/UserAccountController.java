@@ -66,7 +66,7 @@ public class UserAccountController {
         userAccountService.deleteAccount(id);
     }
 
-    @GetMapping(value = "/rank")
+    @GetMapping(value = "/ranks")
     @ApiOperation(
             value = "按积分排行",
             notes = "根据积分降序排行"
@@ -76,4 +76,17 @@ public class UserAccountController {
     public List<UserAccount> rankByScore(@RequestParam("size") Integer size){
         return userAccountService.rankByScore(size);
     }
+
+    @GetMapping(value = "/rank")
+    @ApiOperation(
+            value = "查询自己的排行",
+            notes = "查询自己的排名"
+    )
+    @ApiImplicitParam(value = "用户id", name = "uid",paramType = "query")
+
+    public int getRank(@RequestParam("uid") int uid){
+        return userAccountService.getRank(uid);
+    }
+
+
 }

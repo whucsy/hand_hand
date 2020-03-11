@@ -47,5 +47,9 @@ public class UserAccountService {
         PageRequest pageable = PageRequest.of(0, size, Sort.Direction.DESC, "score");
         return userAccountRepository.rankByScore(pageable);
     }
+    //查询自己的排名
+    public int getRank(int uid){
+        return userAccountRepository.getRank(uid);
+    }
 
 }
