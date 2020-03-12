@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import whu.yes.hand_hand.entity.Mission;
 import whu.yes.hand_hand.entity.UserAccount;
 import whu.yes.hand_hand.repository.UserAccountRepository;
+import springfox.documentation.annotations.Cacheable;
 
 import java.util.*;
 
@@ -21,6 +22,19 @@ public class UserAccountService {
 
     private Map<String, UserDetails> tokenMap = new HashMap<>();
 
+
+    @Cacheable("user")
+    public UserDetails getUserFromToken(String token) {
+        if(token == null) {
+            return null;
+        }
+        return tokenMap.get(token);
+    }
+
+    //登出
+    public void logout(String token) {
+        tokenMap.remove(token);
+    }
 
     //查询全部账户
     public List<UserAccount> getAllAccount() {
