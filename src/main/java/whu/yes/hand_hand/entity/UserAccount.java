@@ -44,4 +44,9 @@ public class UserAccount {
     @ApiModelProperty(value="头像",name="icon")
     String icon;
 
+
+    @ApiModelProperty(value="用户角色,0 普通用户；1管理员'\"",name="role")
+    @Column(name = "role")
+    int role;
+
 }
