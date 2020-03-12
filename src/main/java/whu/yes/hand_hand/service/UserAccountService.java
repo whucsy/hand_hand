@@ -15,6 +15,7 @@ public class UserAccountService {
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+
     //查询全部账户
     public List<UserAccount> getAllAccount(){
         return userAccountRepository.findAll();
@@ -50,6 +51,16 @@ public class UserAccountService {
     //查询自己的排名
     public int getRank(int uid){
         return userAccountRepository.getRank(uid);
+    }
+    //登陆
+    public UserAccount login(String phoneNumber,String password){
+       UserAccount userAccount = userAccountRepository.getByPhoneNumber(phoneNumber).get(0);
+       if(userAccount.getPhoneNumber().equals(phoneNumber) && userAccount.getPassword().equals(password)){
+           return userAccount;
+       }
+       else{
+           return null;
+       }
     }
 
 }

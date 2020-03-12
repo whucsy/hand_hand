@@ -83,10 +83,22 @@ public class UserAccountController {
             notes = "查询自己的排名"
     )
     @ApiImplicitParam(value = "用户id", name = "uid",paramType = "query")
-
     public int getRank(@RequestParam("uid") int uid){
         return userAccountService.getRank(uid);
     }
 
-
+    @GetMapping(value = "/login")
+    @ApiOperation(
+            value = "登陆",
+            notes = "根据电话号码和密码验证登陆"
+    )
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "手机号", name = "phoneNumber",paramType = "query"),
+            @ApiImplicitParam(value = "密码", name = "password",paramType = "query"),
+    }
+    )
+    public UserAccount login(@RequestParam("phoneNumber")String phoneNumber,
+                                 @RequestParam("password") String password){
+        return userAccountService.login(phoneNumber,password);
+    }
 }
