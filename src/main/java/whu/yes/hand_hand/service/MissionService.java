@@ -55,6 +55,15 @@ public class MissionService {
         }
     }
 
+    //关键字搜素
+    public List<Mission> findByKey(Integer page, Integer size,String key){
+        if(page == null){
+            page = 0;
+        }
+        PageRequest pageable = PageRequest.of(page, size, Sort.Direction.DESC, "publishTime");
+        return missionRepository.findByKey(pageable,key);
+    }
+
 
 
 

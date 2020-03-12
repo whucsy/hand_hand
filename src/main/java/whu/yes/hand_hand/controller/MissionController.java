@@ -76,16 +76,34 @@ public class MissionController {
             notes = "根据页数和大小查询任务"
     )
     @ApiImplicitParams({
-            @ApiImplicitParam(value = "页数", name = "page",paramType = "query"),
-            @ApiImplicitParam(value = "每页大小", name = "size",paramType = "query"),
+            @ApiImplicitParam(value = "页数", name = "page",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(value = "每页大小", name = "size",paramType = "query",dataType = "int"),
             @ApiImplicitParam(value = "标签", name = "label",paramType = "query"),
     }
     )
     public List<Mission> findByPage(@RequestParam("page")Integer page,
-                                    @RequestParam("size") Integer size,
+                                    @RequestParam(value = "size",defaultValue = "10") Integer size,
                                     @RequestParam("label") String label){
 
         return missionService.findByPage(page-1,size,label);
+    }
+
+    @GetMapping(value = "/key")
+    @ApiOperation(
+            value = "关键字搜素任务",
+            notes = "根据关键字搜索任务标题和任务详情，返回的分页的任务列表"
+    )
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "页数", name = "page",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(value = "每页大小", name = "size",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(value = "关键字", name = "key",paramType = "query"),
+    }
+    )
+    public List<Mission> findByKey(@RequestParam("page")Integer page,
+                                    @RequestParam(value = "size",defaultValue = "10") Integer size,
+                                    @RequestParam("key") String key){
+
+        return missionService.findByKey(page-1,size,key);
     }
 
 }
