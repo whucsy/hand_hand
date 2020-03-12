@@ -4,9 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -14,13 +12,14 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value="账户对象",description="账户对象")
+@Table(name = "UserAccount",uniqueConstraints=@UniqueConstraint(columnNames="phone_number"))
 public class UserAccount {
     @Id
     @GeneratedValue
     @ApiModelProperty(value="用户账号",name="uid")
     int uid;
 
-
+    @Column(name = "phone_number")
     @ApiModelProperty(value="电话号码",name="phoneNumber")
     String phoneNumber;
 
