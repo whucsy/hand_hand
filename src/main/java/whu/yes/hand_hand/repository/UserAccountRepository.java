@@ -14,8 +14,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount,Integer
     @Query(value = "from UserAccount")
     List<UserAccount> rankByScore(Pageable pageable);
 
-
-    @Query(value = "from UserAccount")
     List<UserAccount> getByPhoneNumber(String phoneNumber);
 
 

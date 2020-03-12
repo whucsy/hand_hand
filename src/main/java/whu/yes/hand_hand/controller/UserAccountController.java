@@ -4,9 +4,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import whu.yes.hand_hand.entity.Mission;
 import whu.yes.hand_hand.entity.UserAccount;
 import whu.yes.hand_hand.service.UserAccountService;
 
@@ -28,14 +29,14 @@ public class UserAccountController {
         return userAccountService.getAllAccount();
     }
 
-    @GetMapping(value = "/uid")
+    @GetMapping(value = "/token")
     @ApiOperation(
-            value = "按id获取单个账户",
-            notes = "根据id获取单个账户，id为整数，查到则返回实体，查不到返回null"
+            value = "按token获取单个账户",
+            notes = "根据token获取单个账户，id为整数，查到则返回实体，查不到返回null"
     )
-    @ApiImplicitParam(value = "账号",name = "uid",paramType = "query")
-    public UserAccount getAccountById(@RequestParam("uid") int uid){
-        return userAccountService.getAccountById(uid);
+    @ApiImplicitParam(value = "token字符串",name = "token",paramType = "query")
+    public UserAccount getAccountById(@RequestParam("token") String token){
+        return userAccountService.getAccountById(token);
     }
 
     @PostMapping
@@ -56,14 +57,16 @@ public class UserAccountController {
         userAccountService.updateAccount(userAccount);
     }
 
+
+    //@PreAuthorize("hasRole('manager')")
     @DeleteMapping
     @ApiOperation(
             value = "按id删除单个账户",
             notes = "根据id删除单个账户"
     )
-    @ApiImplicitParam(value = "账号",name = "uid",paramType = "query")
-    public void deleteAccountById(@RequestParam("uid") int id){
-        userAccountService.deleteAccount(id);
+    @ApiImplicitParam(value = "用户id",name = "uid",paramType = "query")
+    public void deleteAccountById(@RequestParam("uid") int uid){
+        userAccountService.deleteAccount(uid);
     }
 
     @GetMapping(value = "/ranks")
@@ -90,15 +93,19 @@ public class UserAccountController {
     @GetMapping(value = "/login")
     @ApiOperation(
             value = "登陆",
-            notes = "根据电话号码和密码验证登陆"
+            notes = "根据电话号码和密码验证登陆，返回token字符串"
     )
     @ApiImplicitParams({
             @ApiImplicitParam(value = "手机号", name = "phoneNumber",paramType = "query"),
             @ApiImplicitParam(value = "密码", name = "password",paramType = "query"),
     }
     )
-    public UserAccount login(@RequestParam("phoneNumber")String phoneNumber,
+    public Object login(@RequestParam("phoneNumber")String phoneNumber,
                                  @RequestParam("password") String password){
-        return userAccountService.login(phoneNumber,password);
+        String token = userAccountService.login(phoneNumber,password);
+        //构造json字符串
+        String json = "{\"token\":"+"\""+token+"\"}";
+        //转化为json对象
+        return JSONObject.fromObject(json);
     }
 }

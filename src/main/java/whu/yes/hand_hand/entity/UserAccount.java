@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value="账户对象",description="账户对象")
-@Table(name = "UserAccount",uniqueConstraints=@UniqueConstraint(columnNames="phone_number"))
+@Table(name = "user_account",uniqueConstraints=@UniqueConstraint(columnNames="phone_number"))
 public class UserAccount {
     @Id
     @GeneratedValue
@@ -46,7 +46,7 @@ public class UserAccount {
 
 
     @ApiModelProperty(value="用户角色,0 普通用户；1管理员",name="role")
-    @Column(name = "role")
+    @Column(name = "role",columnDefinition = "default 0")
     int role;
 
 }
