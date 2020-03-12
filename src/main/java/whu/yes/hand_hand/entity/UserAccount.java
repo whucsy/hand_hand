@@ -20,6 +20,7 @@ public class UserAccount {
     @ApiModelProperty(value="用户账号",name="uid")
     int uid;
 
+
     @ApiModelProperty(value="电话号码",name="phoneNumber")
     String phoneNumber;
 
