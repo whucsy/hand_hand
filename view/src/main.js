@@ -9,6 +9,11 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 
+var axios = require('axios')
+axios.defaults.baseURL = 'http://localhost:8080/api'
+// 全局注册，之后可在其他组件中通过 this.$axios 发送数据
+Vue.prototype.$axios = axios
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
