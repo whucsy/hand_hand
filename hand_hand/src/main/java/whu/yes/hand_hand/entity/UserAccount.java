@@ -46,7 +46,6 @@ public class UserAccount {
 
 
     @ApiModelProperty(value="用户角色,0 普通用户；1管理员",name="role")
-    @Column(name = "role",columnDefinition = "default 0")
     int role;
 
 }
