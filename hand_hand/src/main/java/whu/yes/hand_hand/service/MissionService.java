@@ -7,7 +7,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import whu.yes.hand_hand.entity.Mission;
 import whu.yes.hand_hand.repository.MissionRepository;
+import whu.yes.hand_hand.util.DateUtil;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,6 +30,7 @@ public class MissionService {
 
     //新增一个任务
     public void insertMission(Mission mission){
+        mission.setPublishTime(DateUtil.getDate());
         missionRepository.save(mission);
     }
 

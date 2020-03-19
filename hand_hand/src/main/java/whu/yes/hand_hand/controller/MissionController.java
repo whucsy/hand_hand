@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import whu.yes.hand_hand.entity.Mission;
 import whu.yes.hand_hand.service.MissionService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import cc.eamon.open.status.Status;
+import cc.eamon.open.status.StatusCode;
 @RestController
 @RequestMapping("/mission")
 @Api(value = "MissionController",tags = "任务控制类")
@@ -26,8 +30,10 @@ public class MissionController {
             value = "获取所有任务",
             notes = "获取所有任务的信息"
     )
-    public List<Mission> getAllMission(){
-        return missionService.getAllMission();
+    public Status getAllMission(){
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",missionService.getAllMission());
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
     @GetMapping(value = "/mid") //路径和获取所有书不同
@@ -36,8 +42,10 @@ public class MissionController {
             notes = "根据id获取单个任务信息，id为整数，查到则返回实体，查不到返回null"
     )
     @ApiImplicitParam(value = "任务编号", name = "mid",paramType = "query",dataType = "int")
-    public Mission getById(@RequestParam("mid") int mid){
-        return missionService.getMissionById(mid);
+    public Status getById(@RequestParam("mid") int mid){
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",missionService.getMissionById(mid));
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
     @PostMapping(value = "/")
@@ -45,8 +53,11 @@ public class MissionController {
             value = "新增一个任务",
             notes = "填写任务信息后，增加一个任务"
     )
-    public void insertMission(@RequestBody Mission mission){
+    public Status insertMission(@RequestBody Mission mission){
         missionService.insertMission(mission);
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",mission);
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
     @PutMapping(value = "/")
@@ -54,8 +65,11 @@ public class MissionController {
             value = "更新任务",
             notes = "修改任务信息"
     )
-    public void updateMission(@RequestBody Mission mission){
+    public Status updateMission(@RequestBody Mission mission){
         missionService.updateMission(mission);
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",mission);
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
 
@@ -65,8 +79,11 @@ public class MissionController {
             notes = "根据id删除单个任务"
     )
     @ApiImplicitParam(value = "任务编号", name = "mid",paramType = "query")
-    public void deleteById(@RequestParam("mid") int mid){
+    public Status deleteById(@RequestParam("mid") int mid){
          missionService.deleteMission(mid);
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",mid);
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
 
@@ -81,11 +98,12 @@ public class MissionController {
             @ApiImplicitParam(value = "标签", name = "label",paramType = "query"),
     }
     )
-    public List<Mission> findByPage(@RequestParam("page")Integer page,
+    public Status findByPage(@RequestParam("page")Integer page,
                                     @RequestParam(value = "size",defaultValue = "10") Integer size,
                                     @RequestParam("label") String label){
-
-        return missionService.findByPage(page-1,size,label);
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",missionService.findByPage(page-1,size,label));
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
     @GetMapping(value = "/key")
@@ -99,11 +117,13 @@ public class MissionController {
             @ApiImplicitParam(value = "关键字", name = "key",paramType = "query"),
     }
     )
-    public List<Mission> findByKey(@RequestParam("page")Integer page,
+    public Status findByKey(@RequestParam("page")Integer page,
                                     @RequestParam(value = "size",defaultValue = "10") Integer size,
                                     @RequestParam("key") String key){
 
-        return missionService.findByKey(page-1,size,key);
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",missionService.findByKey(page-1,size,key));
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
 }
