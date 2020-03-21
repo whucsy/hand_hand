@@ -2,10 +2,10 @@
 	<div>
 		<el-container style=" border: 1px solid #eee">
 			<!--      //顶部导航栏-->
-			<el-header style="background-color: #eeeeee; text-align: right; font-size: 30px">
+			<el-header style="background-color: #eeeeee; text-align: right; font-size: 30px;">
 
 				<!--      头像-->
-				<el-avatar icon="el-icon-user-solid" size="50px"></el-avatar>
+				<el-avatar icon="el-icon-user-solid" size="50px" style="margin-top:10px"></el-avatar>
 
 				<!--       登录按钮-->
 				<el-button type="text" @click="loginFormVisible = true" size="30px">登录</el-button>
@@ -109,15 +109,23 @@
 					</el-submenu>
 				</el-menu>
 			</el-aside>
+
 			<el-main>
-				<el-table :data="tableData">
-					<el-table-column prop="date" label="日期" width="140">
-					</el-table-column>
-					<el-table-column prop="name" label="姓名" width="120">
-					</el-table-column>
-					<el-table-column prop="address" label="地址">
-					</el-table-column>
-				</el-table>
+<!--      任务浏览-->
+<div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px">
+<div >
+<span style="font-size: 20px;margin-left:10px;">任务标题</span>
+<i class="el-icon-coin" style="margin-right:15px">30</i>
+</div>
+<div style="width:380px;border-radius: 4px;background-color: rgb(255, 255, 255);margin-left:10px;margin-right:10px;margin-top:10px;height:155px">
+任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述
+</div>
+<div style="align-items:center; display: -webkit-flex;">
+<span><el-avatar style="margin-top:10px;margin-left:10px"> user </el-avatar></span>
+<span style="margin-left:10px;">name</span>
+</div>
+</div>
+
 			</el-main>
 		</el-container>
 	</div>
@@ -211,7 +219,7 @@
 			resetForm(formName) {
 				this.$refs[formName].resetFields();
 			},
-			
+
 			//登录
 			login(){
 				this.$axios
