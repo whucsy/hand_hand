@@ -111,7 +111,7 @@
 			</el-aside>
 
 			<el-main>
-<!--      任务浏览-->
+<!--       任务浏览-->
 <div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px">
 <div >
 <span style="font-size: 20px;margin-left:10px;">任务标题</span>
