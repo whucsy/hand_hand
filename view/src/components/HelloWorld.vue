@@ -226,7 +226,7 @@
 			//登录
 			login(){
 				this.$axios
-				  .get('/userAccount/login', {
+				  .get('/api/userAccount/login', {
             params:{
               phoneNumber: this.loginForm.count,
               password: this.loginForm.loginPass
