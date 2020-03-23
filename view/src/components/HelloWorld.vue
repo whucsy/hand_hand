@@ -41,7 +41,7 @@
 						</el-form-item>
 						<el-form-item>
 							<el-button @click="registerFormVisible = false">取 消</el-button>
-							<el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+							<el-button type="primary" @click="register">提交</el-button>
 							<el-button @click="resetForm('ruleForm')">重置</el-button>
 						</el-form-item>
 					</el-form>
@@ -241,8 +241,28 @@
 				  })
 				  .catch(failResponse => {
 				  })
-			}
+			},
+
+      //注册
+      register(){
+        this.$axios
+          .post('/api/userAccount', {
+              phoneNumber: this.registerForm.phoneNumber,
+              password: this.registerForm.pass
+          })
+          .then(successResponse => {
+            console.log(successResponse)
+            if (successResponse.data.status === 200) {
+              this.token = successResponse.data.token;
+              console.log(this.token)
+            }
+          })
+          .catch(failResponse => {
+          })
+      }
 		},
+
+
 
 
 	}
