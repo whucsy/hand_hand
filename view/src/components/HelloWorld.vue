@@ -5,16 +5,14 @@
 			<el-header style="background-color: #eeeeee; text-align: right; font-size: 30px;">
 
 				<!--      头像-->
-        <router-link to="userInfo">
-          <el-avatar icon="el-icon-user-solid" size="50px" style="margin-top:10px"></el-avatar>
-        </router-link>
+				<el-avatar icon="el-icon-user-solid" size="50px" style="margin-top:10px"></el-avatar>
 
 				<!--       登录按钮-->
 				<el-button type="text" @click="loginFormVisible = true" size="30px">登录</el-button>
 				<el-dialog style="text-align: left" :visible.sync="loginFormVisible" title="登录账号" width="40%">
 					<el-form :label-position=labelPosition model="loginForm">
 						<el-form-item label="账号" :label-width="formLabelWidth">
-							<el-input v-model="loginForm.count" autocomplete="off"></el-input>
+							<el-input v-model="loginForm.name" autocomplete="off"></el-input>
 						</el-form-item>
 						<el-form-item label="密码" :label-width="formLabelWidth">
 							<el-input type="password" v-model="loginForm.loginPass" autocomplete="off"></el-input>
@@ -62,7 +60,7 @@
 
 		<el-container>
 			<el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-				<el-menu :default-openeds="['1', '3']" >
+				<el-menu :default-openeds="['1', '3']">
 					<el-submenu index="1">
 						<template slot="title"><i class="el-icon-message"></i>导航一</template>
 						<el-menu-item-group>
@@ -114,20 +112,19 @@
 
 			<el-main>
 <!--       任务浏览-->
-        <div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px">
-          <div>
-            <span style="font-size: 20px;margin-left:10px;">任务标题</span>
-            <i class="el-icon-coin" style="margin-right:15px">30</i>
-          </div>
-          <div
-            style="width:380px;border-radius: 4px;background-color: rgb(255, 255, 255);margin-left:10px;margin-right:10px;margin-top:10px;height:155px">
-            任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述
-          </div>
-          <div style="align-items:center; display: -webkit-flex;">
-            <span><el-avatar style="margin-top:10px;margin-left:10px"> user </el-avatar></span>
-            <span style="margin-left:10px;">name</span>
-          </div>
-        </div>
+<div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px">
+<div >
+<span style="font-size: 20px;margin-left:10px;">任务标题</span>
+<i class="el-icon-coin" style="margin-right:15px">30</i>
+</div>
+<div style="width:380px;border-radius: 4px;background-color: rgb(255, 255, 255);margin-left:10px;margin-right:10px;margin-top:10px;height:155px">
+任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述
+</div>
+<div style="align-items:center; display: -webkit-flex;">
+<span><el-avatar style="margin-top:10px;margin-left:10px"> user </el-avatar></span>
+<span style="margin-left:10px;">name</span>
+</div>
+</div>
 
 			</el-main>
 		</el-container>
@@ -244,10 +241,8 @@
 			login(){
 				this.$axios
 				  .get('/userAccount/login', {
-            params:{
-              phoneNumber: this.loginForm.count,
-              password: this.loginForm.loginPass
-            }
+					  phoneNumber: this.loginForm.count,
+					  password: this.loginForm.loginPass
 				  })
 				  .then(successResponse => {
 				    console.log(successResponse)
