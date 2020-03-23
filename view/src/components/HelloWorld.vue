@@ -128,6 +128,22 @@
 
 			</el-main>
 		</el-container>
+<!-- 天梯-->
+<el-container>
+<el-header style="background-color: #d3dce6; height:200px">
+<div style="text-align:left;margin-top:10px;font-size: 25px;"><i class="el-icon-user" style="margin-right:15px">天梯排行</i></div>
+<div style="margin-top:10px">
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl" ></el-avatar>
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl" ></el-avatar>
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl"></el-avatar>
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl"></el-avatar>
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl"></el-avatar>
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl"></el-avatar>
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl"></el-avatar>
+<el-avatar style="margin:0px 10px 0px 10px" :size="100" :src="circleUrl"></el-avatar>
+</div>
+</el-header>
+</el-container>
 	</div>
 </template>
 
@@ -174,7 +190,8 @@
 			};
 			var token = ""
 			return {
-				msg: 'Welcome to Your Vue.js App',
+  circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+  msg: 'Welcome to Your Vue.js App',
 				labelPosition: 'top',
 				loginFormVisible: false,
 				registerFormVisible: false,
@@ -260,6 +277,7 @@
 		line-height: 150px;
 		margin: 0;
 	}
+
 
 	.el-carousel__item:nth-child(2n) {
 		background-color: #99a9bf;
