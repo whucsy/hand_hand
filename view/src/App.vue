@@ -118,7 +118,7 @@
           {name: '/components/UserInfo', navItem: '个人中心'},
           {name: '/publishProject', navItem: '发布项目'},
           {name: '/personalCenter', navItem: '个人中心'},
-          {name: '/manageCenter', navItem: '管理员中心'},
+          {name: '/components/Manager', navItem: '管理员中心'},
         ],
         rules: {
           pass: [{
