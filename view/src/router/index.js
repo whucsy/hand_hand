@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import UserInfo from "../components/UserInfo";
+import Manager from "../components/Manager";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   // routes: [
@@ -36,10 +37,12 @@ export default new Router({
   //   path: '/personalCenter',
   //   name: 'personalCenter',
   //   component: personalCenter
-  // }, {
-  //   path: '/manageCenter',
-  //   name: 'manageCenter',
-  //   component: manageCenter
-  // }
+  //},
+  {
+    //管理员中心
+    path: '/components/Manager',
+    name: 'Manager',
+    component: Manager
+  }
   ]
 })
