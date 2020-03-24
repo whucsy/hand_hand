@@ -1,5 +1,6 @@
 package whu.yes.hand_hand.entity;
 
+import cc.eamon.open.mapping.mapper.MapperIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -29,7 +30,7 @@ public class Mission {
     @ApiModelProperty(value="任务标题",name="mTitle")
     String mTitle;
 
-    @ApiModelProperty(value="发布时间",name="publishTime")
+    @ApiModelProperty(value="发布时间",name="publishTime")//自动生成时间
     String publishTime;
 
     @ApiModelProperty(value="任务描述",name="missionInfo")

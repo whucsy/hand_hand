@@ -16,6 +16,8 @@ public interface UserAccountRepository extends JpaRepository<UserAccount,Integer
 
     List<UserAccount> getByPhoneNumber(String phoneNumber);
 
+    List<UserAccount> getByRole(int role);
+
 
     @Query(value = "select count(*)+1 from user_account where score > (select score from user_account where uid = ?)",nativeQuery = true)
     int getRank(int uid);

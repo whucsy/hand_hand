@@ -1,5 +1,7 @@
 package whu.yes.hand_hand.controller;
 
+import cc.eamon.open.status.Status;
+import cc.eamon.open.status.StatusCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import whu.yes.hand_hand.entity.UserAccount;
 import whu.yes.hand_hand.service.UserAccountService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/userAccount")
@@ -29,6 +33,17 @@ public class UserAccountController {
         return userAccountService.getAllAccount();
     }
 
+    @GetMapping(value = "/manager")
+    @ApiOperation(
+            value = "获取所有管理员",
+            notes = "获取所有管理员"
+    )
+    public Status getManager(){
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",userAccountService.getAccountByRole(1));
+        return new Status(true, StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
+    }
+
     @GetMapping(value = "/token")
     @ApiOperation(
             value = "按token获取单个账户",
@@ -38,6 +53,8 @@ public class UserAccountController {
     public UserAccount getAccountById(@RequestParam("token") String token){
         return userAccountService.getAccountById(token);
     }
+
+
 
     @PostMapping
     @ApiOperation(
@@ -90,7 +107,7 @@ public class UserAccountController {
         return userAccountService.getRank(uid);
     }
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     @ApiOperation(
             value = "登陆",
             notes = "根据电话号码和密码验证登陆，返回token字符串"
