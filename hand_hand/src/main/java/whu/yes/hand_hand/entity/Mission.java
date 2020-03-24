@@ -1,6 +1,4 @@
 package whu.yes.hand_hand.entity;
-
-import cc.eamon.open.mapping.mapper.MapperIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

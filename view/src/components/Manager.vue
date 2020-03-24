@@ -1,31 +1,51 @@
 <template>
   <div>
-    <el-menu :default-active="this.$route.path" class="el-menu-demo" router mode="horizontal" @select="handleSelect" >
-      <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="3" disabled>消息中心</el-menu-item>
-      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-    </el-menu>
 
-
-    <el-container style="width: 1000px; border: 1px solid rgba(211,211,211,0.09);margin-left: 200px;">
+    <el-container style="width: 1200px; border: 1px solid rgba(211,211,211,0.09);margin-left: 50px">
       <el-main>
-        <el-tabs :tab-position="tabPosition" style="height: 200px;" head="个人中心">
-          <el-tab-pane label="用户管理">用户管理</el-tab-pane>
-          <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-          <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-          <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+        <el-tabs :tab-position="tabPosition" style="height: 1000px;" head="管理员中心">
+          <el-tab-pane label="用户管理">
+            <h2 style="float: left;margin-left: 10px">开发人员管理</h2>
+            <el-table
+              :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+              style="width: 90%">
+              <el-table-column
+                label="ID"
+                prop="uid">
+              </el-table-column>
+              <el-table-column
+                label="Name"
+                prop="userName">
+              </el-table-column>
+              <el-table-column
+                label="PhoneNumber"
+                prop="phoneNumber">
+              </el-table-column>
+              <el-table-column
+                align="right">
+                <template slot="header" slot-scope="scope">
+                  <el-input
+                    v-model="search"
+                    size="mini"
+                    placeholder="输入关键字搜索"/>
+                </template>
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    @click="handleEdit(scope.row)">Edit
+                  </el-button>
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.row)">Delete
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+          <el-tab-pane label="消息管理">
+
+          </el-tab-pane>
         </el-tabs>
       </el-main>
     </el-container>
@@ -33,21 +53,45 @@
 </template>
 
 <script>
-    export default {
-        name: "Manager.vue",
-      data() {
-        return {
-          activeIndex: '1',
-          tabPosition:'left'
-        };
-      },
+  export default {
+    name: "Manager.vue",
+    data() {
+      return {
+        activeIndex: '1',
+        tabPosition: 'left',
+        tableData: [],
+        search: ''
+      };
+    },
+    created() {
+      this.getAllManager();
+    },
 
-      methods: {
-        handleSelect(key, keyPath) {
-          console.log(key, keyPath);
-        }
-      }
+    methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleEdit(row){
+        //编辑管理员信息
+      },
+      handleDelete(){
+        //删除管理员信息
+      },
+      getAllManager() {
+        //获取所有管理员的信息
+        this.$axios.get('/api/userAccount/manager')
+          .then(successResponse => {
+            if (successResponse.status === 200) {
+              console.log(successResponse.data);
+              this.tableData = successResponse.data.data.value;
+            }
+          })
+          .catch(failResponse => {
+            alert('获取管理员信息失败');
+          })
+      },
     }
+  }
 </script>
 
 <style scoped>

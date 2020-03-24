@@ -85,12 +85,6 @@
 
         <dependency>
             <groupId>cc.eamon.open</groupId>
-            <artifactId>mapping</artifactId>
-            <version>1.0.3-ALPHA</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cc.eamon.open</groupId>
             <artifactId>status</artifactId>
             <version>0.0.1</version>
         </dependency>

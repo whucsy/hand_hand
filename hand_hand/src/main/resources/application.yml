@@ -11,3 +11,5 @@ spring:
       ddl-auto: update
     #输出执行sql
     show-sql: true
+server:
+  port: 8080
