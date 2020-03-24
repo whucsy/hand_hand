@@ -18,15 +18,20 @@
 <!--       左侧导航栏-->
 			<el-aside width="200px" style="background-color: rgb(238, 241, 246)">
 				<el-menu :default-openeds="['1', '3']" >
-<el-menu-item v-for="(item,i) in navList" :key="i">{{ item.name}}</el-menu-item>
+        <el-menu-item v-for="(item,i) in navList" :key="i">{{ item.name}}</el-menu-item>
 
 
 				</el-menu>
 			</el-aside>
 
 			<el-main>
+<!--       筛选栏-->
+<div class="sort">
+<el-checkbox v-model="checked1">最新发布</el-checkbox>
+<el-checkbox v-model="checked2">酬金最高</el-checkbox>
+</div>
 <!--       任务浏览-->
-        <div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px">
+        <div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px">
           <div>
             <span style="font-size: 20px;margin-left:10px;">任务标题</span>
             <i class="el-icon-coin" style="margin-right:15px">30</i>
@@ -40,8 +45,15 @@
             <span style="margin-left:10px;">name</span>
           </div>
         </div>
+
 			</el-main>
 		</el-container>
+<!--   天梯排行-->
+<el-container>
+<el-main>
+
+</el-main>
+</el-container>
 	</div>
 </template>
 
@@ -50,9 +62,10 @@
 	export default {
 		name: 'HelloWorld',
   data() {
+	  var token="";
   return {
   navList: [
-  {name: '全部'},
+  {name: '推荐'},
   {name: '美术'},
   {name: '计算机'},
   {name: '美工'},
@@ -69,7 +82,27 @@
   {name: '书法'},
   {name: '外语'},
   ],
+  checked1: false,
+  checked2: false,
   };
+  },
+  mounted(){
+    this.getMission();
+  },
+  methods: {
+	  getMission() {
+      this.$axios
+        .get('/api/mission')
+  .then(successResponse => {
+  console.log(successResponse);
+  if (successResponse.data.status === 200) {
+  this.token = successResponse.data.token;
+  console.log(this.token)
+  }
+  })
+  .catch(failResponse => {
+  })
+    },
   },
 	}
 </script>
