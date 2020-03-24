@@ -49,6 +49,11 @@ public class UserAccountService {
         return userAccountRepository.findById(uid).get();
     }
 
+    //查询所有管理员
+    public List<UserAccount> getAccountByRole(int role) {
+        return userAccountRepository.getByRole(role);
+    }
+
 
     //新增一个账户
     public void insertAccount(UserAccount userAccount) {
