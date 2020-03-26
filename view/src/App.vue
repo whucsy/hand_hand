@@ -6,49 +6,54 @@
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>
-      <!--      头像-->
-      <router-link to="UserInfo">
-        <el-avatar icon="el-icon-user-solid" size="50px" style="margin-top:10px"></el-avatar>
-      </router-link>
 
-      <!--       登录按钮-->
-      <el-button type="text" @click="loginFormVisible = true" size="30px">登录</el-button>
-      <el-dialog style="text-align: left" :visible.sync="loginFormVisible" title="登录账号" width="40%">
-        <el-form :label-position=labelPosition model="loginForm">
-          <el-form-item label="账号" :label-width="formLabelWidth">
-            <el-input v-model="loginForm.count" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth">
-            <el-input type="password" v-model="loginForm.loginPass" autocomplete="off"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="loginFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="login">确 定</el-button>
-        </div>
-      </el-dialog>
 
-      <!--        //注册按钮-->
-      <el-button type="text" @click="registerFormVisible = true">注册</el-button>
-      <el-dialog style="text-align: left" :visible.sync="registerFormVisible" title="注册账号" width="40%">
-        <el-form :model="registerForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
-                 class="demo-ruleForm">
-          <el-form-item label="手机号码" prop="phoneNumber">
-            <el-input v-model.number="registerForm.phoneNumber"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="pass">
-            <el-input type="password" v-model="registerForm.pass" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="确认密码" prop="checkPass">
-            <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="registerFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="submitForm">提交</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </el-dialog>
+      <div style="text-align: right">
+        <!--      头像-->
+        <router-link to="UserInfo">
+          <el-avatar icon="el-icon-user-solid" size="50px" style="margin-top:10px;margin-right: 10px"></el-avatar>
+        </router-link>
+
+
+        <!--       登录按钮-->
+        <el-button type="text" @click="loginFormVisible = true" size="30px">登录</el-button>
+        <el-dialog style="text-align: left" :visible.sync="loginFormVisible" title="登录账号" width="40%">
+          <el-form :label-position=labelPosition model="loginForm">
+            <el-form-item label="账号" :label-width="formLabelWidth">
+              <el-input v-model="loginForm.count" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" :label-width="formLabelWidth">
+              <el-input type="password" v-model="loginForm.loginPass" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="loginFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="login">确 定</el-button>
+          </div>
+        </el-dialog>
+
+        <!--        //注册按钮-->
+        <el-button style="margin-right: 10px" type="text" @click="registerFormVisible = true">注册</el-button>
+        <el-dialog style="text-align: left" :visible.sync="registerFormVisible" title="注册账号" width="40%">
+          <el-form :model="registerForm" status-icon :rules="rules" ref="ruleForm" label-width="100px"
+                   class="demo-ruleForm">
+            <el-form-item label="手机号码" prop="phoneNumber">
+              <el-input v-model.number="registerForm.phoneNumber"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="pass">
+              <el-input type="password" v-model="registerForm.pass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="registerFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+              <el-button @click="resetForm('ruleForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
+      </div>
     </el-menu>
 
     <router-view class="menu-right"/>
@@ -116,9 +121,9 @@
         navList: [
           {name: '/components/HelloWorld', navItem: '主页'},
           {name: '/components/UserInfo', navItem: '个人中心'},
-          {name: '/publishProject', navItem: '发布项目'},
-          {name: '/personalCenter', navItem: '个人中心'},
-          {name: '/components/Manager', navItem: '管理员中心'},
+          {name: '/components/CountInfo', navItem: '发布项目'},
+          {name: '/personalCenter', navItem: '分类'},
+          {name: '/manageCenter', navItem: '管理员中心'},
         ],
         rules: {
           pass: [{
@@ -148,7 +153,6 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('注册成功!');
             this.register();
           } else {
             alert("注册失败!");
@@ -164,11 +168,9 @@
       //登录
       login() {
         this.$axios
-          .get('/api/userAccount/login', {
-            params: {
-              phoneNumber: this.loginForm.count,
-              password: this.loginForm.loginPass
-            }
+          .post('/api/userAccount/login', {
+            phoneNumber: this.loginForm.count,
+            password: this.loginForm.loginPass
           })
           .then(successResponse => {
             console.log(successResponse);
@@ -189,13 +191,17 @@
             password: this.registerForm.pass
           })
           .then(successResponse => {
-            console.log(successResponse)
-            if (successResponse.data.status === 200) {
+            console.log(successResponse);
+            if (successResponse.status === 200) {
               this.token = successResponse.data.token;
-              console.log(this.token)
+              console.log(this.token);
+              alert('注册成功!');
+              this.resetForm(this.registerForm);
+              this.registerFormVisible = false;
             }
           })
           .catch(failResponse => {
+            alert('注册失败！');
           })
       }
 
@@ -204,9 +210,10 @@
 </script>
 
 <style>
-  .menu-right{
+  .menu-right {
     /*margin-top:80px;*/
   }
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
