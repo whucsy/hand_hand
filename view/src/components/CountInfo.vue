@@ -36,6 +36,19 @@
 
   <el-divider content-position="left">账号设置</el-divider>
 
+  <el-row class="demo-avatar demo-basic">
+    <el-col :span="12">
+      <div>
+
+      </div>
+    </el-col>
+    <el-col :span="12">
+      <div>
+
+      </div>
+    </el-col>
+  </el-row>
+
 
 </div>
 
