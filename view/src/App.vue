@@ -11,14 +11,14 @@
       <div style="text-align: right">
         <!--      头像-->
         <router-link to="UserInfo">
-          <el-avatar icon="el-icon-user-solid" size="50px" style="margin-top:10px;margin-right: 10px"></el-avatar>
+          <el-avatar icon="el-icon-user-solid" style="margin-top:10px;margin-right: 10px"></el-avatar>
         </router-link>
 
 
         <!--       登录按钮-->
         <el-button type="text" @click="loginFormVisible = true" size="30px">登录</el-button>
         <el-dialog style="text-align: left" :visible.sync="loginFormVisible" title="登录账号" width="40%">
-          <el-form :label-position=labelPosition model="loginForm">
+          <el-form :label-position=labelPosition :model="loginForm">
             <el-form-item label="账号" :label-width="formLabelWidth">
               <el-input v-model="loginForm.count" autocomplete="off"></el-input>
             </el-form-item>
@@ -121,7 +121,7 @@
         navList: [
           {name: '/components/HelloWorld', navItem: '主页'},
           {name: '/components/UserInfo', navItem: '个人中心'},
-          {name: '/components/CountInfo', navItem: '发布项目'},
+          {name: '/components/', navItem: '发布项目'},
           {name: '/personalCenter', navItem: '分类'},
           {name: '/components/manager', navItem: '管理员中心'},
         ],
@@ -174,7 +174,7 @@
           })
           .then(successResponse => {
             console.log(successResponse);
-            if (successResponse.data.status === 200) {
+            if (successResponse.status === 200) {
               this.token = successResponse.data.token;
               console.log(this.token)
             }
@@ -196,7 +196,7 @@
               this.token = successResponse.data.token;
               console.log(this.token);
               alert('注册成功!');
-              this.resetForm(this.registerForm);
+              this.resetForm('ruleForm');
               this.registerFormVisible = false;
             }
           })

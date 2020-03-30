@@ -4,22 +4,11 @@ import HelloWorld from '@/components/HelloWorld'
 import UserInfo from "../components/UserInfo";
 import Manager from "../components/Manager";
 import CountInfo from "../components/CountInfo";
+import EditInfo from '../components/EditInfo';
 
 Vue.use(Router);
 
 export default new Router({
-  // routes: [
-  //   {
-  //     path: '/',
-  //     name: 'HelloWorld',
-  //     component: HelloWorld
-  //   },
-  //   {
-  //     path: '/UserInfo',//和router-link to相呼应，导航到/userInfo
-  //     name: 'UserInfo',
-  //     component: UserInfo
-  //   }
-  // ]
   routes: [{
     path: '/',
     name: 'HelloWorld',
@@ -39,11 +28,11 @@ export default new Router({
     name: 'CountInfo',
     component: CountInfo
   },
-    // {
-  //   path: '/personalCenter',
-  //   name: 'personalCenter',
-  //   component: personalCenter
-  //},
+    {
+    path: '/components/EditInfo',
+    name: 'EditInfo',
+    component: EditInfo
+  },
   {
     //管理员中心
     path: '/components/Manager',
