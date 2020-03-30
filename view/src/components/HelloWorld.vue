@@ -33,16 +33,16 @@
 <!--       任务浏览-->
         <div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px">
           <div>
-            <span style="font-size: 20px;margin-left:10px;">任务标题</span>
-            <i class="el-icon-coin" style="margin-right:15px">30</i>
+            <span style="font-size: 20px;margin-left:10px;">{{ token.mtitle }}</span>
+            <i class="el-icon-coin" style="margin-right:15px">{{ token.money }}</i>
           </div>
           <div
             style="width:380px;border-radius: 4px;background-color: rgb(255, 255, 255);margin-left:10px;margin-right:10px;margin-top:10px;height:155px">
-            任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述
+              {{ token.missionInfo }}
           </div>
           <div style="align-items:center; display: -webkit-flex;">
             <span><el-avatar style="margin-top:10px;margin-left:10px"> user </el-avatar></span>
-            <span style="margin-left:10px;">name</span>
+            <span style="margin-left:10px;">{{ token.uid }}</span>
           </div>
         </div>
 
@@ -50,9 +50,9 @@
 		</el-container>
 <!--   天梯排行-->
 <el-container>
-<el-main>
-
-</el-main>
+<el-footer style="background-color: #E9EEF3;text-align: center;line-height: 160px;height:160px">
+<el-avatar icon="el-icon-user-solid" size="50px"></el-avatar>
+</el-footer>
 </el-container>
 	</div>
 </template>
@@ -62,7 +62,6 @@
 	export default {
 		name: 'HelloWorld',
   data() {
-	  var token="";
   return {
   navList: [
   {name: '推荐'},
@@ -84,6 +83,8 @@
   ],
   checked1: false,
   checked2: false,
+  token:null,
+  mNumber:null,
   };
   },
   mounted(){
@@ -95,9 +96,10 @@
         .get('/api/mission')
   .then(successResponse => {
   console.log(successResponse);
-  if (successResponse.data.status === 200) {
-  this.token = successResponse.data.token;
-  console.log(this.token)
+  if (successResponse.data.statusCode === 200) {
+  this.token = successResponse.data.data.value[0];
+  this.mNumber = Object.keys(successResponse.data.data.value).length;
+  console.log(this.token);
   }
   })
   .catch(failResponse => {
