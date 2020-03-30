@@ -4,7 +4,6 @@ import HelloWorld from '@/components/HelloWorld'
 import UserInfo from "../components/UserInfo";
 import Manager from "../components/Manager";
 import CountInfo from "../components/CountInfo";
-import EditInfo from '../components/EditInfo';
 
 Vue.use(Router);
 
@@ -28,11 +27,11 @@ export default new Router({
     name: 'CountInfo',
     component: CountInfo
   },
-    {
-    path: '/components/EditInfo',
-    name: 'EditInfo',
-    component: EditInfo
-  },
+  //   {
+  //   path: '/components/EditInfo',
+  //   name: 'EditInfo',
+  //   component: EditInfo
+  // },
   {
     //管理员中心
     path: '/components/Manager',

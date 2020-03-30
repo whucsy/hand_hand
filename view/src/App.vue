@@ -23,7 +23,7 @@
               <el-input v-model="loginForm.count" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="密码" :label-width="formLabelWidth">
-              <el-input type="password" v-model="loginForm.loginPass" autocomplete="off"></el-input>
+              <el-input type="password" v-model="loginForm.loginPass" autocomplete="off" show-password></el-input>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -41,10 +41,10 @@
               <el-input v-model.number="registerForm.phoneNumber"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pass">
-              <el-input type="password" v-model="registerForm.pass" autocomplete="off"></el-input>
+              <el-input type="password" v-model="registerForm.pass" autocomplete="off" show-password></el-input>
             </el-form-item>
             <el-form-item label="确认密码" prop="checkPass">
-              <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
+              <el-input type="password" v-model="registerForm.checkPass" autocomplete="off" show-password></el-input>
             </el-form-item>
             <el-form-item>
               <el-button @click="registerFormVisible = false">取 消</el-button>
@@ -123,7 +123,7 @@
           {name: '/components/UserInfo', navItem: '个人中心'},
           {name: '/components/', navItem: '发布项目'},
           {name: '/personalCenter', navItem: '分类'},
-          {name: '/components/manager', navItem: '管理员中心'},
+          {name: '/components/Manager', navItem: '管理员中心'},
         ],
         rules: {
           pass: [{
@@ -191,7 +191,7 @@
             password: this.registerForm.pass
           })
           .then(successResponse => {
-            console.log(successResponse);
+            // console.log(successResponse);
             if (successResponse.status === 200) {
               this.token = successResponse.data.token;
               console.log(this.token);
