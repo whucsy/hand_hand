@@ -123,7 +123,7 @@
           {name: '/components/UserInfo', navItem: '个人中心'},
           {name: '/components/CountInfo', navItem: '发布项目'},
           {name: '/personalCenter', navItem: '分类'},
-          {name: '/manageCenter', navItem: '管理员中心'},
+          {name: '/components/manager', navItem: '管理员中心'},
         ],
         rules: {
           pass: [{
