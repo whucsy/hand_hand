@@ -31,21 +31,22 @@
 <el-checkbox v-model="checked2">酬金最高</el-checkbox>
 </div>
 <!--       任务浏览-->
-        <div style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px">
+<span class="mission" v-for="n in mNumber" >
+        <div  style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px;margin-right:15px" >
           <div>
-            <span style="font-size: 20px;margin-left:10px;">{{ token.mtitle }}</span>
-            <i class="el-icon-coin" style="margin-right:15px">{{ token.money }}</i>
+            <span style="font-size: 20px;margin-left:10px;">{{ token.data.data.value[n-1].mtitle }}</span>
+            <i class="el-icon-coin" style="margin-right:15px">{{ token.data.data.value[n-1].money }}</i>
           </div>
           <div
             style="width:380px;border-radius: 4px;background-color: rgb(255, 255, 255);margin-left:10px;margin-right:10px;margin-top:10px;height:155px">
-              {{ token.missionInfo }}
+              {{ token.data.data.value[n-1].missionInfo }}
           </div>
           <div style="align-items:center; display: -webkit-flex;">
             <span><el-avatar style="margin-top:10px;margin-left:10px"> user </el-avatar></span>
-            <span style="margin-left:10px;">{{ token.uid }}</span>
+            <span style="margin-left:10px;">{{ token.data.data.value[n-1].uid }}</span>
           </div>
         </div>
-
+</span>
 			</el-main>
 		</el-container>
 <!--   天梯排行-->
@@ -97,7 +98,7 @@
   .then(successResponse => {
   console.log(successResponse);
   if (successResponse.data.statusCode === 200) {
-  this.token = successResponse.data.data.value[0];
+  this.token = successResponse;
   this.mNumber = Object.keys(successResponse.data.data.value).length;
   console.log(this.token);
   }
@@ -119,6 +120,9 @@
 		color: #42b983;
 	}
 
+	span.mission div{
+    float:left;
+    }
 	.el-carousel__item h3 {
 		color: #475669;
 		font-size: 14px;
