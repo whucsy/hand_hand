@@ -49,6 +49,30 @@
         </el-tabs>
       </el-main>
     </el-container>
+    <el-dialog
+      title="提示"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center>
+      <el-form :label-position=labelPosition model="EditForm">
+        <el-form-item label="用户名" :label-width="formLabelWidth">
+          <el-input v-model="EditForm.userName" :value="nowManager.userName"></el-input>
+        </el-form-item>
+        <el-form-item label="电话" :label-width="formLabelWidth">
+          <el-input v-model="EditForm.phoneNumber" :value="nowManager.phoneNumber"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" :label-width="formLabelWidth">
+          <el-input type="password" v-model="EditForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="座右铭" :label-width="formLabelWidth">
+          <el-input v-model="EditForm.motto" :value="nowManager.motto"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="centerDialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="updateManager()">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -60,7 +84,20 @@
         activeIndex: '1',
         tabPosition: 'left',
         tableData: [],
-        search: ''
+        search: '',
+
+        nowManager:'',//当前被点击的管理员
+
+        /*修改框*/
+        centerDialogVisible: false, //编辑框可不可见
+        formLabelWidth: '80px',     //表单label宽度
+        labelPosition: 'top',
+        EditForm:{
+          userName:'',
+          phoneNumber:'',
+          password:'',
+          motto:''
+        }
       };
     },
     created() {
@@ -71,10 +108,42 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      handleEdit(row){
-        //编辑管理员信息
+      handleEdit(row) {
+        //获取当前管理员
+        for(let i = 0; i < this.tableData.length; i++){
+          if(this.tableData[i].uid === row.uid){
+            this.nowManager = this.tableData[i];
+            break;
+          }
+        }
+        //弹出编辑框
+        this.centerDialogVisible = true
+        //
       },
-      handleDelete(){
+      updateManager(){
+        //更新管理员
+        this.$axios.put('/api/userAccount',{
+          "balance": this.nowManager.balance,
+          "icon": this.nowManager.icon,
+          "level": this.nowManager.level,
+          "motto": this.EditForm.motto,
+          "password": this.EditForm.password,
+          "phoneNumber": this.EditForm.phoneNumber,
+          "role": 1,
+          "score": this.nowManager.score,
+          "uid": this.nowManager.uid,
+          "userName": this.EditForm.userName
+        }).then(successResponse => {
+          if (successResponse.status === 200) {
+            alert('更新成功')
+            this.getAllManager();
+            this.centerDialogVisible = false;
+          }
+        }).catch(failResponse => {
+          alert('更新失败')
+        })
+      },
+      handleDelete(row) {
         //删除管理员信息
       },
       getAllManager() {
@@ -82,7 +151,6 @@
         this.$axios.get('/api/userAccount/manager')
           .then(successResponse => {
             if (successResponse.status === 200) {
-              console.log(successResponse.data);
               this.tableData = successResponse.data.data.value;
             }
           })
