@@ -1,6 +1,6 @@
 <template>
 <div>
-  <el-container style="width: 70%; border: 1px solid rgba(211,211,211,0.09);margin-left: 15%;height: 100%;margin-top: 10px">
+  <el-container style="width: 900px; border: 1px solid rgba(211,211,211,0.09);margin-left: 200px;height: 100%;margin-top: 10px">
       <el-main>
         <el-tabs :tab-position="tabPosition" style="height: 100%" v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="账号资料" name="0" >
@@ -60,29 +60,29 @@
               </el-row>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="我的任务" name="1">配置管理</el-tab-pane>
-          <el-tab-pane label="我的收藏" name="2" >角色管理</el-tab-pane>
+          <el-tab-pane label="任务和收藏" name="1">
+            <div>
+              <el-container>
+                <el-header style="text-align: left;font-size: x-large;height: 30px">我的任务及收藏</el-header>
+                <el-main style="margin-left: 10px">
+                  <el-tabs v-model="activeName_1" @tab-click="handleClick">
+                    <el-tab-pane label="发布" name="first">发布任务</el-tab-pane>
+                    <el-tab-pane label="接受" name="second">接受任务</el-tab-pane>
+                    <el-tab-pane label="收藏" name="third">我的收藏</el-tab-pane>
+                  </el-tabs>
+                </el-main>
+              </el-container>
+            </div>
+
+
+          </el-tab-pane>
+<!--          <el-tab-pane label="我的收藏" name="2" >角色管理</el-tab-pane>-->
           <el-tab-pane label="积分中心" name="3">定时任务补偿</el-tab-pane>
           <el-tab-pane label="我的钱包" name="4">定时任务补偿</el-tab-pane>
           <el-tab-pane name="5">
             <div style="width: 70%">
               <el-page-header @back="goBack" content="修改信息"></el-page-header>
               <div style="margin-top: 50px;margin-left: 50px">
-<!--                <el-row style="height: 60px">-->
-<!--                  <span style="width: 80px;text-align: right">用户名：</span>-->
-<!--                  <el-input vl-model="in_userName" size="small" style="width: 150px"></el-input>-->
-<!--                </el-row>-->
-<!--                <el-row style="height: 60px">-->
-<!--                  <span style="width: 80px;text-align: right">性别：</span>-->
-<!--                  <template>-->
-<!--                    <el-radio v-model="radio" label="1">男</el-radio>-->
-<!--                    <el-radio v-model="radio" label="2">女</el-radio>-->
-<!--                  </template>-->
-<!--                </el-row>-->
-<!--                <el-row>-->
-<!--                  <span style="width: 80px;text-align: right">个性签名：</span>-->
-<!--                  <el-input vl-model="in_motto" type="textarea" :rows="2" size="small" style="width: 150px"></el-input>-->
-<!--                </el-row>-->
                 <el-form ref="form" :model="form" label-width="80px">
                   <el-form-item label="用户名">
                     <el-input v-model="form.userName"></el-input>
@@ -114,8 +114,6 @@
                   <el-form-item label="当前住址">
                     <el-input v-model="form.address"></el-input>
                   </el-form-item>
-
-
                   <el-form-item>
                     <el-button type="primary" @click="onSubmit">保存更改</el-button>
                     <el-button>取消</el-button>
@@ -153,10 +151,10 @@
           address: 'address',
           userType: 'userType',
 
+          //我的任务 name=1
+          activeName_1: 'first',
+
           //修改信息 name=5
-          // in_userName: 'userName',
-          // in_motto: '',
-          // radio: '1',
           form: {
             userName: 'userName',
             company: 'company',
