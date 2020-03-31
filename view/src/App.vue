@@ -121,9 +121,9 @@
         navList: [
           {name: '/components/HelloWorld', navItem: '主页'},
           {name: '/components/UserInfo', navItem: '个人中心'},
-          {name: '/components/', navItem: '发布项目'},
           {name: '/personalCenter', navItem: '分类'},
           {name: '/components/Manager', navItem: '管理员中心'},
+          {name: '/components/PostMission', navItem: '发布任务'},
         ],
         rules: {
           pass: [{

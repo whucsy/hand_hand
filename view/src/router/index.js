@@ -4,10 +4,23 @@ import HelloWorld from '@/components/HelloWorld'
 import UserInfo from "../components/UserInfo";
 import Manager from "../components/Manager";
 import CountInfo from "../components/CountInfo";
+import PostMission from "../components/PostMission";
 
 Vue.use(Router);
 
 export default new Router({
+  // routes: [
+  //   {
+  //     path: '/',
+  //     name: 'HelloWorld',
+  //     component: HelloWorld
+  //   },
+  //   {
+  //     path: '/UserInfo',//和router-link to相呼应，导航到/userInfo
+  //     name: 'UserInfo',
+  //     component: UserInfo
+  //   }
+  // ]
   routes: [{
     path: '/',
     name: 'HelloWorld',
@@ -42,5 +55,12 @@ export default new Router({
   //   name: 'manageCenter',
   //   component: manageCenter
   // }
+    ,
+    {
+      //发布任务
+      path: '/components/PostMission',
+      name: 'PostMission',
+      component: PostMission
+    }
   ]
 })
