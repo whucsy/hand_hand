@@ -168,15 +168,17 @@
       //登录
       login() {
         this.$axios
-          .post('/api/userAccount/login', {
+          .post('/api/userAccount/login', this.$qs.stringify({
             phoneNumber: this.loginForm.count,
             password: this.loginForm.loginPass
-          })
+          }))
           .then(successResponse => {
             console.log(successResponse);
             if (successResponse.status === 200) {
               this.token = successResponse.data.token;
-              console.log(this.token)
+              console.log(this.token);
+              alert('登陆成功');
+              this.loginFormVisible = false;
             }
           })
           .catch(failResponse => {
