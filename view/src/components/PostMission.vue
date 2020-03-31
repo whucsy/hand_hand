@@ -1,8 +1,9 @@
 <template>
-  <div style="margin-top:40px; margin-left: 350px;margin-right: 350px; ">
-    <el-form :model="postForm" :rules="rules"  ref="postForm" label-width="150px" label-position="top" style="text-align: left" class="demo-postForm" >
+
+  <div style="margin-top:40px; margin-left: 350px;margin-right: 350px;">
+    <el-form :model="postForm" :rules="rules"  ref="postForm" label-width="150px" label-position="top" style="text-align: left;" class="demo-postForm" >
 <!--   通过rules属性传入约定的验证规则，并将Form-Item的prop属性设置为需校验的字段名-->
-      <el-form-item label="任务标题" prop="title">
+      <el-form-item  label="任务标题" prop="title" >
         <el-input v-model="postForm.title"></el-input>
       </el-form-item>
 
@@ -30,13 +31,13 @@
       <el-form-item label="截止日期" required>
       <el-col :span="11">
         <el-form-item prop="date1">
-          <el-date-picker type="date" placeholder="选择日期" v-model="postForm.date1" style="width: 95%;"></el-date-picker>
+          <el-date-picker type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="postForm.date1" style="width: 95%;"></el-date-picker>
         </el-form-item>
       </el-col>
       <el-col class="line" :span="1">-</el-col>
       <el-col :span="11">
         <el-form-item prop="date2">
-          <el-time-picker placeholder="选择时间" v-model="postForm.date2" style="width: 95%;"></el-time-picker>
+          <el-time-picker placeholder="选择时间"  format="HH:mm:ss" value-format="HH:mm:ss" v-model="postForm.date2" style="width: 95%;"></el-time-picker>
         </el-form-item>
       </el-col>
     </el-form-item>
@@ -44,13 +45,13 @@
       <el-form-item label="有效期" >
         <el-col :span="11">
           <el-form-item >
-            <el-date-picker type="date" placeholder="选择日期" v-model="postForm.date3" style="width: 95%;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="postForm.date3" style="width: 95%;"></el-date-picker>
           </el-form-item>
         </el-col>
         <el-col class="line" :span="1">-</el-col>
         <el-col :span="11">
           <el-form-item>
-            <el-time-picker placeholder="选择时间" v-model="postForm.date4" style="width: 95%;"></el-time-picker>
+            <el-time-picker placeholder="选择时间" format="HH:mm:ss" value-format="HH:mm:ss" v-model="postForm.date4" style="width: 95%;"></el-time-picker>
           </el-form-item>
         </el-col>
       </el-form-item>
@@ -99,10 +100,24 @@
       <el-form-item>
         <el-button type="primary" @click="submit('postForm')" >立即发布</el-button>
       </el-form-item>
+
     </el-form>
   </div>
 
+
 </template>
+
+<style>
+  .el-input__inner{
+    border: 1px solid #a5a8ab;
+  }
+  .el-textarea__inner{
+    border: 1px solid #a5a8ab;
+  }
+  .el-form-item__label{
+    font-size: 15px;
+  }
+</style>
 
 <script>
   export default {
@@ -131,10 +146,10 @@
             { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
           ],
           date1: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+            {required: true, message: '请选择日期', trigger: 'change' }
           ],
           date2: [
-            { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+            {  required: true, message: '请选择时间', trigger: 'change' }
           ],
           desc: [
             { required: true, message: '请填写任务详细描述', trigger: 'blur' }
