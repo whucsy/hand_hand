@@ -167,6 +167,7 @@
 
       //登录
       login() {
+        //此处不是传递json对象，而是传递键值对
         this.$axios
           .post('/api/userAccount/login', this.$qs.stringify({
             phoneNumber: this.loginForm.count,

@@ -44,7 +44,14 @@
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="消息管理">
-
+            <el-form ref="form" :model="form" label-width="80px">
+              <el-form-item label="消息内容">
+                <el-input type="textarea" v-model="form.info"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">发送</el-button>
+              </el-form-item>
+            </el-form>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -97,6 +104,12 @@
           phoneNumber:'',
           password:'',
           motto:''
+        },
+
+
+        /*消息发送表单*/
+        form:{
+          info:''
         }
       };
     },
@@ -118,7 +131,6 @@
         }
         //弹出编辑框
         this.centerDialogVisible = true
-        //
       },
       updateManager(){
         //更新管理员
@@ -135,7 +147,7 @@
           "userName": this.EditForm.userName
         }).then(successResponse => {
           if (successResponse.status === 200) {
-            alert('更新成功')
+            alert('更新成功');
             this.getAllManager();
             this.centerDialogVisible = false;
           }
@@ -145,6 +157,18 @@
       },
       handleDelete(row) {
         //删除管理员信息
+        this.$axios.delete('/api/userAccount',{
+          params:{
+            'uid': row.uid
+          }
+        }).then(successResponse => {
+          if (successResponse.status === 200) {
+            alert('删除成功');
+            this.getAllManager();
+          }
+        }).catch(failResponse => {
+          alert('删除失败')
+        })
       },
       getAllManager() {
         //获取所有管理员的信息
@@ -158,6 +182,11 @@
             alert('获取管理员信息失败');
           })
       },
+
+      //发送消息
+      onSubmit(){
+
+      }
     }
   }
 </script>
