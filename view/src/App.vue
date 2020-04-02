@@ -7,18 +7,14 @@
         {{ item.navItem }}
       </el-menu-item>
 
-
-      <div style="text-align: right">
+<!--      如果cookie中没有用户信息-->
+      <div style="text-align: right; margin-top: 12px" v-if="showLogin === ''">
         <!--      头像-->
-        <router-link to="UserInfo">
-          <el-avatar icon="el-icon-user-solid" style="margin-top:10px;margin-right: 10px"></el-avatar>
-        </router-link>
-
-
+          <i class="el-icon-user" style="margin-top:10px;margin-right: 10px"></i>
         <!--       登录按钮-->
         <el-button type="text" @click="loginFormVisible = true" size="30px">登录</el-button>
         <el-dialog style="text-align: left" :visible.sync="loginFormVisible" title="登录账号" width="40%">
-          <el-form :label-position=labelPosition :model="loginForm">
+          <el-form :label-position=labelPosition :model="loginForm" @submit.native.prevent>
             <el-form-item label="账号" :label-width="formLabelWidth">
               <el-input v-model="loginForm.count" autocomplete="off"></el-input>
             </el-form-item>
@@ -31,6 +27,8 @@
             <el-button type="primary" @click="login">确 定</el-button>
           </div>
         </el-dialog>
+
+        <el-divider direction="vertical"></el-divider>
 
         <!--        //注册按钮-->
         <el-button style="margin-right: 10px" type="text" @click="registerFormVisible = true">注册</el-button>
@@ -54,6 +52,25 @@
           </el-form>
         </el-dialog>
       </div>
+
+<!--      如果cookie中有用户信息-->
+      <div style="text-align: right; margin-top: 10px" v-else>
+        <!--      头像-->
+        <router-link to="/components/UserInfo">
+          <el-avatar icon="el-icon-user-solid" style="margin-top:10px;margin-right: 10px"></el-avatar>
+        </router-link>
+        <el-button style="margin-right: 10px" size="30px" type="text" @click="exit">{{showLogin}}</el-button>
+<!--        <span style="font-size: medium; margin-bottom: 20px;margin-right: 10px">{{showLogin}}</span>-->
+
+
+<!--          <el-submenu index="5" style="width: 50px">-->
+<!--            <template slot="title">{{showLogin}}</template>-->
+<!--            <el-menu-item index="5-1">个人中心</el-menu-item>-->
+<!--            <el-menu-item index="5-2" @click="exit">退出</el-menu-item>-->
+<!--          </el-submenu>-->
+      </div>
+
+
     </el-menu>
 
     <router-view class="menu-right"/>
@@ -105,6 +122,7 @@
       return {
         labelPosition: 'top',
         loginFormVisible: false,
+        showLogin: this.getCookie('userName'),
         registerFormVisible: false,
         loginForm: {
           count: '',
@@ -119,7 +137,7 @@
         },
         activeIndex: '1',
         navList: [
-          {name: '/components/HelloWorld', navItem: '主页'},
+          {name: '/', navItem: '主页'},
           {name: '/components/UserInfo', navItem: '个人中心'},
           {name: '/personalCenter', navItem: '分类'},
           {name: '/components/Manager', navItem: '管理员中心'},
@@ -176,9 +194,12 @@
           .then(successResponse => {
             console.log(successResponse);
             if (successResponse.status === 200) {
+              console.log('登录成功');
+              //根据登录成功返回的token设置cookie
               this.token = successResponse.data.token;
+              this.initCookie();
               console.log(this.token);
-              alert('登陆成功');
+              alert('登录成功');
               this.loginFormVisible = false;
             }
           })
@@ -186,6 +207,58 @@
           })
       },
 
+      //设置cookie
+      initCookie() {
+        this.$axios
+          .get('/api/userAccount/token', {
+            params: {
+              token: this.token
+            }
+          })
+          .then(successResponse => {
+            console.log(successResponse);
+            if (successResponse.status === 200) {
+              var expiredays = 7;
+              this.setCookie('uid', successResponse.data.uid, expiredays);
+              // this.setCookie('phoneNumber',successResponse.data.phoneNumber,expiredays);
+              // this.setCookie('password',successResponse.data.password,expiredays);
+              this.setCookie('userName', successResponse.data.userName, expiredays);
+              // this.setCookie('score',successResponse.data.score,expiredays);
+              // this.setCookie('level',successResponse.data.level,expiredays);
+              // this.setCookie('motto',successResponse.data.motto,expiredays);
+              // this.setCookie('balance',successResponse.data.balance,expiredays);
+              this.setCookie('icon', successResponse.data.icon, expiredays);
+              // this.setCookie('role',successResponse.data.role,expiredays);
+              console.log('保存cookie成功');
+              //跳转到首页
+              this.$router.push('/');
+              this.showLogin=this.getCookie('userName');
+            }
+          })
+      },
+
+      //退出登录
+      exit() {
+        //1.清除cookie
+        this.clearAllCookie();
+        //跳转到首页
+        this.$router.push('/');
+        this.showLogin = '';
+      },
+
+      //清除所有cookie函数
+      clearAllCookie() {
+        var date = new Date();
+        date.setTime(date.getTime() - 10000);
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        console.log("需要删除的cookie名字：" + keys);
+        if (keys) {
+          for (var i = keys.length; i--;) {
+            document.cookie = keys[i] + "=; expire=" + date.toGMTString() + "; path=/";
+          }
+        }
+        console.log(document.cookie);
+      },
       //注册
       register() {
         this.$axios
@@ -196,8 +269,9 @@
           .then(successResponse => {
             // console.log(successResponse);
             if (successResponse.status === 200) {
-              this.token = successResponse.data.token;
-              console.log(this.token);
+              // this.token = successResponse.data.token;
+              // console.log(this.token);
+              console.log('注册成功');
               alert('注册成功!');
               this.resetForm('ruleForm');
               this.registerFormVisible = false;

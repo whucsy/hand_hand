@@ -20,6 +20,7 @@
                     <div style="width:380px;margin-left:15px;margin-right:10px;margin-top:10px;">
                       <span>id：</span><span>{{uid}}</span>
                       <span style="margin-left: 30px">积分：</span><span>{{score}}</span>
+                      <span style="margin-left: 30px">余额：</span><span>{{balance}}</span>
                     </div>
                     <div style="margin-top: 17px;margin-left: 10px">
                       <span>个性签名：</span><span>{{motto}}</span>
@@ -41,7 +42,7 @@
                 </el-row>
                 <el-row class="demo-avatar demo-basic" style="margin-top: 30px">
                   <el-col :span="12"><span>所在地：</span><span>{{address}}</span></el-col>
-                  <el-col :span="12"><span>职业：</span><span>{{userType}}</span></el-col>
+                  <el-col :span="12"><span>账号类型：</span><span>{{userType}}</span></el-col>
                 </el-row>
               </div>
               <el-divider content-position="right">账号设置</el-divider>
@@ -139,31 +140,32 @@
       data() {
         return {
           tabPosition: 'left',
-          //账号资料 name=0
           activeName: '0',
-          age: 'age',
+          //账号资料 name=0
+          age: this.getCookie('age'),
           sex: 'sex',
-          motto: 'motto',
-          userName: 'userName',
-          score: 'score',
-          uid: 'uid',
-          level: 'level',
+          motto: this.getCookie('user').match('motto'),
+          userName: this.getCookie('userName'),
+          score: this.getCookie('score'),
+          uid: this.getCookie('uid'),
+          level: this.getCookie('level'),
           address: 'address',
           userType: 'userType',
+          balance: this.getCookie('balance'),
 
           //我的任务 name=1
           activeName_1: 'first',
 
           //修改信息 name=5
           form: {
-            userName: 'userName',
+            userName: this.getCookie('userName'),
             company: 'company',
             date: new Date,
             education: 'education',
             location: 'location',
             realName: 'realName',
             sex: '0',
-            motto: 'motto',
+            motto: this.getCookie('motto'),
             school: 'school',
             studentNo: 'studentNo',
             idNumber: 'idNumber',
@@ -182,6 +184,8 @@
         handleClick(tab,event) {
 
         },
+        //根据id查询用户信息
+
         //账号资料 name=0
         editInfo() {
           this.activeName='5';

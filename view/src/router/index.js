@@ -9,27 +9,17 @@ import PostMission from "../components/PostMission";
 Vue.use(Router);
 
 export default new Router({
-  // routes: [
-  //   {
-  //     path: '/',
-  //     name: 'HelloWorld',
-  //     component: HelloWorld
-  //   },
-  //   {
-  //     path: '/UserInfo',//和router-link to相呼应，导航到/userInfo
-  //     name: 'UserInfo',
-  //     component: UserInfo
-  //   }
-  // ]
-  routes: [{
+  routes: [
+    {
     path: '/',
     name: 'HelloWorld',
     component:HelloWorld
-  }, {
-    path: '/components/HelloWorld',
-    name: 'HelloWorld',
-    component: HelloWorld
   },
+  //   {
+  //   path: '/components/HelloWorld',
+  //   name: 'HelloWorld',
+  //   component: HelloWorld
+  // },
     {
     path: '/components/UserInfo',
     name: 'UserInfo',

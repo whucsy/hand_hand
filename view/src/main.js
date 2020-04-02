@@ -17,7 +17,6 @@ Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 Vue.prototype.$qs = qs;
 
-
 //设置cookie,放在main.js
 Vue.prototype.setCookie = function(c_name,value,expiredays) {
   var exdate=new Date();
