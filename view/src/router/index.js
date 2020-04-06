@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import UserInfo from "../components/UserInfo";
 import Manager from "../components/Manager";
-import CountInfo from "../components/CountInfo";
 import PostMission from "../components/PostMission";
 
 Vue.use(Router);
@@ -25,11 +24,11 @@ export default new Router({
     name: 'UserInfo',
     component: UserInfo
   },
-    {
-    path: '/components/CountInfo',
-    name: 'CountInfo',
-    component: CountInfo
-  },
+  //   {
+  //   path: '/components/CountInfo',
+  //   name: 'CountInfo',
+  //   component: CountInfo
+  // },
   //   {
   //   path: '/components/EditInfo',
   //   name: 'EditInfo',

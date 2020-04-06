@@ -54,20 +54,14 @@
       </div>
 
 <!--      如果cookie中有用户信息-->
-      <div style="text-align: right; margin-top: 10px" v-else>
+      <div style="text-align: right;margin-top: 8px" v-else class="demo-type">
         <!--      头像-->
         <router-link to="/components/UserInfo">
-          <el-avatar icon="el-icon-user-solid" style="margin-top:10px;margin-right: 10px"></el-avatar>
+          <el-avatar :src="imageScr" :fit="fit" style="margin-bottom: -10px"></el-avatar>
         </router-link>
-        <el-button style="margin-right: 10px" size="30px" type="text" @click="exit">{{showLogin}}</el-button>
-<!--        <span style="font-size: medium; margin-bottom: 20px;margin-right: 10px">{{showLogin}}</span>-->
-
-
-<!--          <el-submenu index="5" style="width: 50px">-->
-<!--            <template slot="title">{{showLogin}}</template>-->
-<!--            <el-menu-item index="5-1">个人中心</el-menu-item>-->
-<!--            <el-menu-item index="5-2" @click="exit">退出</el-menu-item>-->
-<!--          </el-submenu>-->
+        <span style="font-size: large;margin-left: 10px">{{showLogin}}</span>
+        <el-divider direction="vertical"></el-divider>
+        <el-button style="margin-right: 10px;font-size: small" type="text" @click="exit">退出登录</el-button>
       </div>
 
 
@@ -120,6 +114,8 @@
       };
       var token = "";
       return {
+        fit: 'contain',
+        imageScr:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
         labelPosition: 'top',
         loginFormVisible: false,
         showLogin: this.getCookie('userName'),
@@ -138,7 +134,7 @@
         activeIndex: '1',
         navList: [
           {name: '/', navItem: '主页'},
-          {name: '/components/UserInfo', navItem: '个人中心'},
+          // {name: '/components/UserInfo', navItem: '个人中心'},
           {name: '/personalCenter', navItem: '分类'},
           {name: '/components/Manager', navItem: '管理员中心'},
           {name: '/components/PostMission', navItem: '发布任务'},
@@ -220,18 +216,17 @@
             if (successResponse.status === 200) {
               var expiredays = 7;
               this.setCookie('uid', successResponse.data.uid, expiredays);
-              // this.setCookie('phoneNumber',successResponse.data.phoneNumber,expiredays);
-              // this.setCookie('password',successResponse.data.password,expiredays);
+              this.setCookie('phoneNumber',successResponse.data.phoneNumber,expiredays);
+              this.setCookie('password',successResponse.data.password,expiredays);
               this.setCookie('userName', successResponse.data.userName, expiredays);
-              // this.setCookie('score',successResponse.data.score,expiredays);
-              // this.setCookie('level',successResponse.data.level,expiredays);
-              // this.setCookie('motto',successResponse.data.motto,expiredays);
-              // this.setCookie('balance',successResponse.data.balance,expiredays);
+              this.setCookie('score',successResponse.data.score,expiredays);
+              this.setCookie('level',successResponse.data.level,expiredays);
+              this.setCookie('motto',successResponse.data.motto,expiredays);
+              this.setCookie('balance',successResponse.data.balance,expiredays);
               this.setCookie('icon', successResponse.data.icon, expiredays);
-              // this.setCookie('role',successResponse.data.role,expiredays);
+              this.setCookie('role',successResponse.data.role,expiredays);
               console.log('保存cookie成功');
-              //跳转到首页
-              this.$router.push('/');
+              //更新导航栏
               this.showLogin=this.getCookie('userName');
             }
           })
@@ -241,8 +236,7 @@
       exit() {
         //1.清除cookie
         this.clearAllCookie();
-        //跳转到首页
-        this.$router.push('/');
+        //更新导航栏
         this.showLogin = '';
       },
 

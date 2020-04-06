@@ -8,7 +8,7 @@
               <el-row style="height: 150px">
                 <!--    头像-->
                 <el-col :span="6">
-                  <el-avatar icon="el-icon-user-solid" :size="120" style="margin-left: 30px"></el-avatar>
+                  <el-avatar :src="imageSrc" :fit="fit" :size="120" style="margin-left: 30px"></el-avatar>
                 </el-col>
                 <!--    信息-->
                 <el-col :span="18">
@@ -139,17 +139,20 @@
         name: "UserInfo",
       data() {
         return {
+
           tabPosition: 'left',
           activeName: '0',
           //账号资料 name=0
+          fit: 'contain',
+          imageSrc: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
           age: this.getCookie('age'),
           sex: 'sex',
-          motto: this.getCookie('user').match('motto'),
+          motto: this.getCookie('motto'),
           userName: this.getCookie('userName'),
           score: this.getCookie('score'),
           uid: this.getCookie('uid'),
           level: this.getCookie('level'),
-          address: 'address',
+          address: this.getCookie('address'),
           userType: 'userType',
           balance: this.getCookie('balance'),
 
@@ -176,6 +179,9 @@
 
         };
       },
+      created() {
+          this.getInfoById();
+      },
 
       methods: {
         handleSelect(key, keyPath) {
@@ -185,6 +191,22 @@
 
         },
         //根据id查询用户信息
+        getInfoById(){
+          this.$axios
+          .get('api/userInfo/uid',{
+            params: {
+              uid: this.getCookie('uid')
+            }
+          })
+          .then(successResponse => {
+            console.log(successResponse);
+            if(successResponse.status === 200){
+              var expiredays = 7;
+              this.setCookie('address', successResponse.data.address, expiredays);
+            }
+          })
+        },
+
 
         //账号资料 name=0
         editInfo() {
