@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <el-container style="width: 1200px; border: 1px solid rgba(211,211,211,0.09);margin-left: 50px">
       <el-main>
         <el-tabs :tab-position="tabPosition" style="height: 1000px;" head="管理员中心">

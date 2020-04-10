@@ -6,7 +6,16 @@
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>
-
+<div>
+<el-input placeholder="搜索" v-model="input" class="input-with-select" >
+<el-select v-model="select" slot="prepend" placeholder="请选择">
+<el-option label="uid" value="1"></el-option>
+<el-option label="任务名" value="2"></el-option>
+<el-option label="mid" value="3"></el-option>
+</el-select>
+<el-button slot="append" icon="el-icon-search" @click="getResult"></el-button>
+</el-input>
+</div>
 <!--      如果cookie中没有用户信息-->
       <div style="text-align: right; margin-top: 12px" v-if="showLogin === ''">
         <!--      头像-->
@@ -120,7 +129,10 @@
         loginFormVisible: false,
         showLogin: this.getCookie('userName'),
         registerFormVisible: false,
-        loginForm: {
+        input: '',
+        select: '',
+
+  loginForm: {
           count: '',
           loginPass: ''
         },
@@ -178,7 +190,11 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-
+      getResult() {
+        var input = this.input;
+        var select = this.select;
+        this.$router.push({path: '/components/searchResult/getInput='+select+'='+input});
+      },
       //登录
       login() {
         //此处不是传递json对象，而是传递键值对
@@ -285,7 +301,15 @@
     /*margin-top:80px;*/
   }
 
-  #app {
+    .input-with-select .el-input-group__prepend {
+    background-color: #fff;
+    }
+    .el-select .el-input {
+    width: 130px;
+    }
+
+
+    #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

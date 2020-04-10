@@ -4,7 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import UserInfo from "../components/UserInfo";
 import Manager from "../components/Manager";
 import PostMission from "../components/PostMission";
-
+import searchResult from "../components/searchResult";
 Vue.use(Router);
 
 export default new Router({
@@ -50,6 +50,14 @@ export default new Router({
       path: '/components/PostMission',
       name: 'PostMission',
       component: PostMission
+    }
+    ,
+    {
+      //搜索结果
+      path: '/components/searchResult',
+      path: '/components/searchResult/:input',
+      name: 'searchResult',
+      component: searchResult
     }
   ]
 })
