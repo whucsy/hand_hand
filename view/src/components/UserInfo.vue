@@ -8,7 +8,7 @@
               <el-row style="height: 150px">
                 <!--    头像-->
                 <el-col :span="6">
-                  <el-avatar :src="imageSrc" :fit="fit" :size="120" style="margin-left: 30px"></el-avatar>
+                  <el-avatar :src="icon" :fit="fit" :size="120" style="margin-left: 30px"></el-avatar>
                 </el-col>
                 <!--    信息-->
                 <el-col :span="18">
@@ -51,7 +51,7 @@
                 <el-col :span="3" style="font-size: 60px;color: #909399"><i class="el-icon-mobile"></i></el-col>
                 <el-col :span="9" style="margin-top: 10px">
                   <el-row><el-link type="info" style="font-size: large" :underline="false"><b>修改绑定手机号</b></el-link>></el-row>
-                  <el-row style="margin-top: 5px; font-size: small"><span>已绑定：</span></el-row>
+                  <el-row style="margin-top: 5px; font-size: small"><span>已绑定：</span><span>{{phoneNumber}}</span></el-row>
                 </el-col>
                 <el-col :span="3" style="font-size: 60px;color: #909399"><i class="el-icon-lock"></i></el-col>
                 <el-col :span="9" style="margin-top: 10px">
@@ -61,6 +61,8 @@
               </el-row>
             </div>
           </el-tab-pane>
+
+<!--          我的任务及收藏-->
           <el-tab-pane label="任务和收藏" name="1">
             <div>
               <el-container>
@@ -74,19 +76,19 @@
                 </el-main>
               </el-container>
             </div>
-
-
           </el-tab-pane>
 <!--          <el-tab-pane label="我的收藏" name="2" >角色管理</el-tab-pane>-->
           <el-tab-pane label="积分中心" name="3">定时任务补偿</el-tab-pane>
           <el-tab-pane label="我的钱包" name="4">定时任务补偿</el-tab-pane>
+
+<!--          修改信息-->
           <el-tab-pane name="5">
             <div style="width: 70%">
               <el-page-header @back="goBack" content="修改信息"></el-page-header>
               <div style="margin-top: 50px;margin-left: 50px">
                 <el-form ref="form" :model="form" label-width="80px">
                   <el-form-item label="用户名">
-                    <el-input v-model="form.userName"></el-input>
+                    <el-input v-model="userName"></el-input>
                   </el-form-item>
                   <el-form-item label="性别">
                   <el-radio-group v-model="form.sex">
@@ -95,7 +97,7 @@
                   </el-radio-group>
                   </el-form-item>
                   <el-form-item label="个性签名">
-                    <el-input type="textarea" v-model="form.motto"></el-input>
+                    <el-input type="textarea" v-model="motto"></el-input>
                   </el-form-item>
                   <el-form-item label="生日">
                     <el-date-picker v-model="form.date" type="date" style="width: 100%"></el-date-picker>
@@ -113,7 +115,7 @@
                     <el-input v-model="form.location"></el-input>
                   </el-form-item>
                   <el-form-item label="当前住址">
-                    <el-input v-model="form.address"></el-input>
+                    <el-input v-model="address"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <el-button type="primary" @click="onSubmit">保存更改</el-button>
@@ -142,11 +144,12 @@
 
           tabPosition: 'left',
           activeName: '0',
+
           //账号资料 name=0
           fit: 'contain',
-          imageSrc: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          icon: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
           age: this.getCookie('age'),
-          sex: 'sex',
+          sex: '女',
           motto: this.getCookie('motto'),
           userName: this.getCookie('userName'),
           score: this.getCookie('score'),
@@ -155,25 +158,22 @@
           address: this.getCookie('address'),
           userType: 'userType',
           balance: this.getCookie('balance'),
+          phoneNumber: this.getCookie('phoneNumber'),
 
           //我的任务 name=1
           activeName_1: 'first',
 
           //修改信息 name=5
           form: {
-            userName: this.getCookie('userName'),
+            sex: '1',
             company: 'company',
             date: new Date,
             education: 'education',
             location: 'location',
             realName: 'realName',
-            sex: '0',
-            motto: this.getCookie('motto'),
             school: 'school',
             studentNo: 'studentNo',
             idNumber: 'idNumber',
-            userType: 'userType',
-            address: 'address',
           },
 
 
@@ -190,6 +190,10 @@
         handleClick(tab,event) {
 
         },
+        //初始化信息
+        initInfo(){
+          // this.
+        },
         //根据id查询用户信息
         getInfoById(){
           this.$axios
@@ -203,6 +207,7 @@
             if(successResponse.status === 200){
               var expiredays = 7;
               this.setCookie('address', successResponse.data.address, expiredays);
+              
             }
           })
         },

@@ -6,16 +6,18 @@
       <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
         {{ item.navItem }}
       </el-menu-item>
-<div>
-<el-input placeholder="搜索" v-model="input" class="input-with-select" >
-<el-select v-model="select" slot="prepend" placeholder="请选择">
-<el-option label="uid" value="1"></el-option>
-<el-option label="任务名" value="2"></el-option>
-<el-option label="mid" value="3"></el-option>
-</el-select>
-<el-button slot="append" icon="el-icon-search" @click="getResult"></el-button>
-</el-input>
-</div>
+
+      <el-menu-item>
+        <el-input placeholder="搜索" v-model="input" class="input-with-select">
+          <el-select v-model="select" slot="prepend" placeholder="请选择">
+            <el-option label="uid" value="1"></el-option>
+            <el-option label="任务名" value="2"></el-option>
+            <el-option label="mid" value="3"></el-option>
+          </el-select>
+          <el-button slot="append" icon="el-icon-search" @click="getResult"></el-button>
+        </el-input>
+      </el-menu-item>
+
 <!--      如果cookie中没有用户信息-->
       <div style="text-align: right; margin-top: 12px" v-if="showLogin === ''">
         <!--      头像-->
@@ -253,6 +255,7 @@
         //1.清除cookie
         this.clearAllCookie();
         //更新导航栏
+        this.$router.push('/components/HelloWorld');
         this.showLogin = '';
       },
 

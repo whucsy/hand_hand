@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '../components/HelloWorld'
 import UserInfo from "../components/UserInfo";
 import Manager from "../components/Manager";
 import PostMission from "../components/PostMission";
@@ -14,12 +14,13 @@ export default new Router({
     name: 'HelloWorld',
     component:HelloWorld
   },
-  //   {
-  //   path: '/components/HelloWorld',
-  //   name: 'HelloWorld',
-  //   component: HelloWorld
-  // },
     {
+    path: '/components/HelloWorld',
+    name: 'HelloWorld',
+    component: HelloWorld
+  },
+    {
+      //个人中心
     path: '/components/UserInfo',
     name: 'UserInfo',
     component: UserInfo
@@ -54,7 +55,7 @@ export default new Router({
     ,
     {
       //搜索结果
-      path: '/components/searchResult',
+      // path: '/components/searchResult',
       path: '/components/searchResult/:input',
       name: 'searchResult',
       component: searchResult
