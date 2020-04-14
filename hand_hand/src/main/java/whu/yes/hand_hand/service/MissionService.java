@@ -27,6 +27,11 @@ public class MissionService {
         return missionRepository.findById(id).get();
     }
 
+    //按uid查询任务
+    public List<Mission> getMissionByUid(int uid){
+        return missionRepository.findByUid(uid);
+    }
+
 
     //新增一个任务
     public void insertMission(Mission mission){

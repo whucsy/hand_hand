@@ -23,5 +23,6 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
     @Query(value = "from Mission  where mTitle like %:key% or missionInfo like %:key% ")
     List<Mission> findByKey(Pageable pageable, @Param("key")String key);
 
-
+    //按用户ID查询
+    List<Mission> findByUid(int uid);
 }

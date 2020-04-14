@@ -41,10 +41,22 @@ public class MissionController {
             value = "按id获取单个任务",
             notes = "根据id获取单个任务信息，id为整数，查到则返回实体，查不到返回null"
     )
-    @ApiImplicitParam(value = "任务编号", name = "mid",paramType = "query",dataType = "int")
+    @ApiImplicitParam(value = "账号", name = "mid",paramType = "query",dataType = "int")
     public Status getById(@RequestParam("mid") int mid){
         Map<String,Object> data = new HashMap<>();
         data.put("value",missionService.getMissionById(mid));
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
+    }
+
+    @GetMapping(value = "/uid") //路径和获取所有书不同
+    @ApiOperation(
+            value = "按uid获取任务",
+            notes = "根据uid获取任务"
+    )
+    @ApiImplicitParam(value = "任务编号", name = "uid",paramType = "query",dataType = "int")
+    public Status getByUid(@RequestParam("uid") int uid){
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",missionService.getMissionByUid(uid));
         return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
