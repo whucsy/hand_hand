@@ -1,13 +1,18 @@
 package whu.yes.hand_hand.controller;
 
+import cc.eamon.open.status.Status;
+import cc.eamon.open.status.StatusCode;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import whu.yes.hand_hand.entity.SaveList;
 import whu.yes.hand_hand.service.SaveListService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/saveList")
@@ -34,6 +39,18 @@ public class SaveListController {
     )
     public SaveList getSaveListById(@RequestParam("id")int id){
         return saveListService.getSaveListById(id);
+    }
+
+    @GetMapping(value = "/uid")
+    @ApiOperation(
+            value = "按uid获取收藏的任务",
+            notes = "根据uid获取收藏的任务"
+    )
+    @ApiImplicitParam(value = "账号", name = "uid",paramType = "query",dataType = "int")
+    public Status getByUid(@RequestParam("uid") int uid){
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",saveListService.getMissionByUid(uid));
+        return new Status(true, StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
     @PostMapping

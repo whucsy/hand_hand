@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value="用户信息对象",description="用户信息对象")
-public class UserInfo {
+public class UserInfo{
     @Id
     @ApiModelProperty(value="用户账号",name="uid")
     int uid;

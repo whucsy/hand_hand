@@ -8,4 +8,5 @@ import java.util.List;
 public interface ReceiveListRepository extends JpaRepository<ReceiveList,Integer> {
 
     List<ReceiveList> findByMid(int mid);
+
 }
