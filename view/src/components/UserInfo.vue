@@ -72,6 +72,7 @@
                 <el-header style="text-align: left;font-size: x-large;height: 30px">我的任务及收藏</el-header>
                 <el-main style="margin-left: 10px">
                   <el-tabs v-model="activeName_1" @tab-click="handleClick">
+<!--                    我发布的任务-->
                     <el-tab-pane label="发布" name="first">
                       <span class="mission" v-for="n in publishCount">
                         <div style="width:43%;background-color: rgb(247, 247, 255);text-align: left;height:100px;margin-top:15px;margin-left:20px">
@@ -94,12 +95,58 @@
                             </el-col>
                         </div>
                       </span>
-
                     </el-tab-pane>
-
-
-                    <el-tab-pane label="接受" name="second">接受任务</el-tab-pane>
-                    <el-tab-pane label="收藏" name="third">我的收藏</el-tab-pane>
+<!--                   我接受的任务 -->
+                    <el-tab-pane label="接受" name="second">
+                      <span class="mission" v-for="n in publishCount">
+                        <div style="width:43%;background-color: rgb(247, 247, 255);text-align: left;height:100px;margin-top:15px;margin-left:20px">
+                          <el-col :span="6" style="margin-top: 25px">
+                            <el-avatar :src="icon" :fit="fit" :size="60" style="margin-left: 10px"></el-avatar>
+                          </el-col>
+                          <el-col :span="16">
+                            <div>
+                              <div style="margin-top: 10px;width: 98%;height: 25px;margin-left: 10px">
+                                <span style="font-size: 20px"><b>超级超级标题</b></span>
+                              </div>
+                              <div style="margin-left:10px;width: 98%;margin-top: 10px">
+                                  <span style="font-size: 14px">详细描述</span>
+                              </div>
+                              <div style="margin-left: 10px;margin-top: 10px;font-size: x-small;color: #606266">
+                                <span >2020-4-15</span>
+                                <i class="el-icon-coin" style="margin-right:5px;margin-left: 50px">酬金</i>
+                              </div>
+                            </div>
+                          </el-col>
+                          <el-col :span="2" style="margin-top: 5px">
+                            <i class="el-icon-circle-check" style="font-size: 20px;color: #409EFF"></i>
+                          </el-col>
+                        </div>
+                      </span>
+                    </el-tab-pane>
+<!--                    我收藏的任务-->
+                    <el-tab-pane label="收藏" name="third">
+                      <span class="mission" v-for="n in publishCount">
+                        <div style="width:43%;background-color: rgb(247, 247, 255);text-align: left;height:100px;margin-top:15px;margin-left:20px">
+                          <el-col :span="6" style="margin-top: 25px">
+                            <el-avatar :src="icon" :fit="fit" :size="60" style="margin-left: 10px"></el-avatar>
+                          </el-col>
+                          <el-col :span="18">
+                              <div>
+                                <div style="margin-top: 10px;width: 98%;height: 25px;margin-left: 10px">
+                                  <span style="font-size: 20px"><b>超级超级标题</b></span>
+                                </div>
+                                <div style="margin-left:10px;width: 98%;margin-top: 10px">
+                                    <span style="font-size: 14px">详细描述</span>
+                                </div>
+                                <div style="margin-left: 10px;margin-top: 10px;font-size: x-small;color: #606266">
+                                  <span >2020-4-15</span>
+                                  <i class="el-icon-coin" style="margin-right:5px;margin-left: 50px">酬金</i>
+                                </div>
+                              </div>
+                            </el-col>
+                        </div>
+                      </span>
+                    </el-tab-pane>
                   </el-tabs>
                 </el-main>
               </el-container>
