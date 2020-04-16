@@ -169,6 +169,11 @@
         },
       };
     },
+    created() {
+      if(this.getCookie('token') !== ''){
+        this.getUidByToken();
+      }
+    },
 
     methods: {
       handleOpen(key, keyPath) {
@@ -209,8 +214,8 @@
               console.log('登录成功');
               //根据登录成功返回的token设置cookie
               this.token = successResponse.data.token;
-              this.initCookie();
-              console.log(this.token);
+              this.setCookie('token',successResponse.data.token,7);
+              this.getUidByToken();
               alert('登录成功');
               this.loginFormVisible = false;
             }
@@ -220,11 +225,11 @@
       },
 
       //设置cookie
-      initCookie() {
+      getUidByToken() {
         this.$axios
           .get('/api/userAccount/token', {
             params: {
-              token: this.token
+              token: this.getCookie('token')
             }
           })
           .then(successResponse => {
@@ -232,18 +237,9 @@
             if (successResponse.status === 200) {
               var expiredays = 7;
               this.setCookie('uid', successResponse.data.uid, expiredays);
-              this.setCookie('phoneNumber',successResponse.data.phoneNumber,expiredays);
-              this.setCookie('password',successResponse.data.password,expiredays);
-              this.setCookie('userName', successResponse.data.userName, expiredays);
-              this.setCookie('score',successResponse.data.score,expiredays);
-              this.setCookie('level',successResponse.data.level,expiredays);
-              this.setCookie('motto',successResponse.data.motto,expiredays);
-              this.setCookie('balance',successResponse.data.balance,expiredays);
-              this.setCookie('icon', successResponse.data.icon, expiredays);
-              this.setCookie('role',successResponse.data.role,expiredays);
-              console.log('保存cookie成功');
+              // this.setCookie('userName',successResponse.data.userName,expiredays);
               //更新导航栏
-              this.showLogin=this.getCookie('userName');
+              this.showLogin=successResponse.data.userName;//this.getCookie('userName');
             }
           })
       },

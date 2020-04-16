@@ -16,6 +16,9 @@
                     <div>
                       <span style="font-size: 30px;margin-left:5px;"><b>{{userName}}</b></span>
                       <i class="el-icon-medal" style="margin-right:15px;size: 15px">{{level}}</i>
+                      <el-popover placement="top-start" width="50" trigger="hover" content="修改昵称">
+                        <i class="el-icon-edit" @click="editAccountInfo" slot="reference"></i>
+                      </el-popover>
                     </div>
                     <div style="width:380px;margin-left:15px;margin-right:10px;margin-top:10px;">
                       <span>id：</span><span>{{uid}}</span>
@@ -29,9 +32,9 @@
                 </el-col>
               </el-row>
 
-              <el-divider content-position="right">基础信息
+              <el-divider content-position="right">完善个人信息
                 <el-popover placement="top-start" width="50" trigger="hover" content="点击修改信息">
-                  <i class="el-icon-edit" @click="editInfo" slot="reference"></i>
+                  <i class="el-icon-edit" @click="editUserInfo" slot="reference"></i>
                 </el-popover>
               </el-divider>
 
@@ -69,7 +72,32 @@
                 <el-header style="text-align: left;font-size: x-large;height: 30px">我的任务及收藏</el-header>
                 <el-main style="margin-left: 10px">
                   <el-tabs v-model="activeName_1" @tab-click="handleClick">
-                    <el-tab-pane label="发布" name="first">发布任务</el-tab-pane>
+                    <el-tab-pane label="发布" name="first">
+                      <span class="mission" v-for="n in publishCount">
+                        <div style="width:43%;background-color: rgb(247, 247, 255);text-align: left;height:100px;margin-top:15px;margin-left:20px">
+                            <el-col :span="20">
+                              <div>
+                                <div style="margin-top: 10px;width: 98%;height: 25px;margin-left: 10px">
+                                  <span style="font-size: 20px"><b>超级超级标题</b></span>
+                                </div>
+                                <div style="margin-left:10px;width: 98%;margin-top: 10px">
+                                    <span style="font-size: 14px">详细描述</span>
+                                </div>
+                                <div style="margin-left: 10px;margin-top: 10px;font-size: x-small;color: #606266">
+                                  <span >2020-4-15</span>
+                                  <i class="el-icon-coin" style="margin-right:5px;margin-left: 50px">酬金</i>
+                                </div>
+                              </div>
+                            </el-col>
+                            <el-col :span="4" style="margin-top: 25px">
+                              <i class="el-icon-circle-check" style="font-size: 40px;color: #409EFF"></i>
+                            </el-col>
+                        </div>
+                      </span>
+
+                    </el-tab-pane>
+
+
                     <el-tab-pane label="接受" name="second">接受任务</el-tab-pane>
                     <el-tab-pane label="收藏" name="third">我的收藏</el-tab-pane>
                   </el-tabs>
@@ -82,13 +110,13 @@
           <el-tab-pane label="我的钱包" name="4">定时任务补偿</el-tab-pane>
 
 <!--          修改信息-->
-          <el-tab-pane name="5">
+          <el-tab-pane name="5" disabled>
             <div style="width: 70%">
               <el-page-header @back="goBack" content="修改信息"></el-page-header>
               <div style="margin-top: 50px;margin-left: 50px">
                 <el-form ref="form" :model="form" label-width="80px">
-                  <el-form-item label="用户名">
-                    <el-input v-model="userName"></el-input>
+                  <el-form-item label="真实姓名">
+                    <el-input v-model="form.realName"></el-input>
                   </el-form-item>
                   <el-form-item label="性别">
                   <el-radio-group v-model="form.sex">
@@ -96,8 +124,8 @@
                     <el-radio label="1">女</el-radio>
                   </el-radio-group>
                   </el-form-item>
-                  <el-form-item label="个性签名">
-                    <el-input type="textarea" v-model="motto"></el-input>
+                  <el-form-item label="身份证号">
+                    <el-input type="textarea" v-model="form.idNumber"></el-input>
                   </el-form-item>
                   <el-form-item label="生日">
                     <el-date-picker v-model="form.date" type="date" style="width: 100%"></el-date-picker>
@@ -111,6 +139,9 @@
                   <el-form-item label="学校名称">
                     <el-input v-model="form.school"></el-input>
                   </el-form-item>
+                  <el-form-item label="学号">
+                    <el-input v-model="form.studentNo"></el-input>
+                  </el-form-item>
                   <el-form-item label="户籍">
                     <el-input v-model="form.location"></el-input>
                   </el-form-item>
@@ -118,8 +149,8 @@
                     <el-input v-model="address"></el-input>
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" @click="onSubmit">保存更改</el-button>
-                    <el-button>取消</el-button>
+                    <el-button type="primary" @click="submitUserEdit">保存更改</el-button>
+<!--                    <el-button>取消</el-button>-->
                   </el-form-item>
                 </el-form>
 
@@ -128,6 +159,28 @@
             </div>
 
 
+          </el-tab-pane>
+<!--          修改昵称和个性签名-->
+          <el-tab-pane name="6" disabled>
+            <div style="width: 70%">
+              <el-page-header @back="goBack" content="修改昵称"></el-page-header>
+              <div style="margin-top: 50px;margin-left: 50px">
+                <el-form ref="form" :model="form" label-width="80px">
+                  <el-form-item label="用户名">
+                    <el-input v-model="userName"></el-input>
+                  </el-form-item>
+                  <el-form-item label="个性签名">
+                    <el-input type="textarea" v-model="motto"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" @click="submitAccountEdit">保存更改</el-button>
+<!--                    <el-button>取消</el-button>-->
+                  </el-form-item>
+                </el-form>
+
+              </div>
+
+            </div>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -148,39 +201,45 @@
           //账号资料 name=0
           fit: 'contain',
           icon: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-          age: this.getCookie('age'),
+          age: '',
           sex: '女',
-          motto: this.getCookie('motto'),
-          userName: this.getCookie('userName'),
-          score: this.getCookie('score'),
+          motto: '',
+          userName: '',
+          score: '',
           uid: this.getCookie('uid'),
-          level: this.getCookie('level'),
-          address: this.getCookie('address'),
-          userType: 'userType',
-          balance: this.getCookie('balance'),
-          phoneNumber: this.getCookie('phoneNumber'),
+          level: '',
+          address: '',
+          userType: '',
+          balance: '',
+          phoneNumber: '',
 
           //我的任务 name=1
           activeName_1: 'first',
+          publishCount: 2,
 
           //修改信息 name=5
           form: {
             sex: '1',
-            company: 'company',
+            company: '',
             date: new Date,
-            education: 'education',
-            location: 'location',
-            realName: 'realName',
-            school: 'school',
-            studentNo: 'studentNo',
-            idNumber: 'idNumber',
+            education: '',
+            location: '',
+            realName: '',
+            school: '',
+            studentNo: '',
+            idNumber: '',
           },
 
 
         };
       },
       created() {
-          this.getInfoById();
+          // this.createUserInfo();
+          this.getUserInfoById();
+          this.getCountInfoByToken();
+      },
+      mounted() {
+        this.getMyPublish();
       },
 
       methods: {
@@ -188,14 +247,32 @@
           console.log(key, keyPath);
         },
         handleClick(tab,event) {
-
         },
-        //初始化信息
-        initInfo(){
-          // this.
+
+        //根据token查询账户信息
+        getCountInfoByToken() {
+          this.$axios
+            .get('/api/userAccount/token', {
+              params: {
+                token: this.getCookie('token')
+              }
+            })
+            .then(successResponse => {
+              if (successResponse.status === 200) {
+                this.balance = successResponse.data.balance;
+                // this.icon = successResponse.data.icon;
+                this.level = successResponse.data.level;
+                this.motto = successResponse.data.motto;
+                this.phoneNumber = successResponse.data.phoneNumber;
+                this.password = successResponse.data.password;
+                this.role = successResponse.data.role;
+                this.score = successResponse.data.score;
+                this.userName = successResponse.data.userName;
+              }
+            })
         },
         //根据id查询用户信息
-        getInfoById(){
+        getUserInfoById(){
           this.$axios
           .get('api/userInfo/uid',{
             params: {
@@ -203,19 +280,105 @@
             }
           })
           .then(successResponse => {
-            console.log(successResponse);
             if(successResponse.status === 200){
-              var expiredays = 7;
-              this.setCookie('address', successResponse.data.address, expiredays);
-              
+              this.address = successResponse.data.address;
+              this.realName = successResponse.data.realName;
+              this.idNumber = successResponse.data.idNumber;
+              this.age = successResponse.data.age;
+              this.studentNo = successResponse.data.studentNo;
+              this.school = successResponse.data.school;
+              this.education = successResponse.data.education;
+              this.company = successResponse.data.company;
+              this.location = successResponse.data.location;
+              this.userType = successResponse.data.userType;
             }
+          })
+          .catch(failResponse=>{
+            this.createUserInfo();
+            console.log('获取用户信息失败');
+          })
+        },
+        //创建用户信息表
+        createUserInfo(){
+          this.$axios
+            .post('api/userInfo', {
+              uid: this.getCookie('uid')
+            })
+            .then(successResponse=>{
+              if(successResponse.status === 200){
+                console.log('增加信息表成功');
+              }
+            })
+            .catch(failResponse=>{
+              console.log('创建用户信息表失败');
+            });
+        },
+
+        //账号资料 name=0
+        editUserInfo() {
+          this.activeName='5';
+        },
+        submitUserEdit() {
+          this.$axios
+          .post('api/userInfo',{
+            uid: this.uid,
+            address: this.address,
+            age: this.age,
+            company: this.company,
+            education: this.education,
+            idNumber: this.idNumber,
+            location: this.location,
+            realName: this.realName,
+            school: this.school,
+            studentNo: this.studentNo,
+            userType: this.userType
+          })
+          .then(successResponse=>{
+            if(successResponse.status === 200){
+              console.log(successResponse.status);
+              alert('修改成功');
+              this.activeName='0';
+              this.getUserInfoById();
+            }
+          })
+          .catch(failResponse=>{
+            alert('提交失败');
+          })
+        },
+        //修改用户名或者个性签名
+        editAccountInfo(){
+          this.activeName = '6'
+        },
+        submitAccountEdit() {
+          this.$axios
+          .put('api/userAccount',{
+            uid: this.uid,
+            balance: this.balance,
+            icon: this.icon,
+            level: this.level,
+            motto: this.motto,
+            password: this.password,
+            phoneNumber: this.phoneNumber,
+            role: this.role,
+            score: this.score,
+            userName: this.userName
+          })
+          .then(successResponse=>{
+            if(successResponse.status === 200){
+              console.log('修改账户信息成功');
+              alert("修改成功");
+              this.activeName='0';
+              this.getCountInfoByToken();
+            }
+          })
+          .catch(failResponse=>{
+
           })
         },
 
+        //我的发布 name=1
+        getMyPublish(){
 
-        //账号资料 name=0
-        editInfo() {
-          this.activeName='5';
         },
 
         //修改信息 name=5
@@ -233,4 +396,7 @@
 </script>
 
 <style scoped>
+  span.mission div {
+    float: left;
+  }
 </style>

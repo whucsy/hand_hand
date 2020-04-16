@@ -55,8 +55,8 @@ export default new Router({
     ,
     {
       //搜索结果
-       path: '/components/searchResult',
-      //path: '/components/searchResult/:input',
+      path: '/components/searchResult',
+      // path: '/components/searchResult/:input',
       name: 'searchResult',
       component: searchResult
     }
