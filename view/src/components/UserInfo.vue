@@ -130,7 +130,7 @@
                           <el-col :span="6" style="margin-top: 25px">
                             <el-avatar :src="icon" :fit="fit" :size="60" style="margin-left: 10px"></el-avatar>
                           </el-col>
-                          <el-col :span="18">
+                          <el-col :span="16">
                               <div>
                                 <div style="margin-top: 10px;width: 98%;height: 25px;margin-left: 10px">
                                   <span style="font-size: 20px"><b>超级超级标题</b></span>
@@ -144,6 +144,9 @@
                                 </div>
                               </div>
                             </el-col>
+                          <el-col :span="2">
+                            <i class="el-icon-star-on" style="font-size: 25px;color: rgb(255,225,0)"></i>
+                          </el-col>
                         </div>
                       </span>
                     </el-tab-pane>
@@ -163,7 +166,7 @@
               <div style="margin-top: 50px;margin-left: 50px">
                 <el-form ref="form" :model="form" label-width="80px">
                   <el-form-item label="真实姓名">
-                    <el-input v-model="form.realName"></el-input>
+                    <el-input v-model="realName"></el-input>
                   </el-form-item>
                   <el-form-item label="性别">
                   <el-radio-group v-model="form.sex">
@@ -172,25 +175,25 @@
                   </el-radio-group>
                   </el-form-item>
                   <el-form-item label="身份证号">
-                    <el-input type="textarea" v-model="form.idNumber"></el-input>
+                    <el-input type="textarea" v-model="idNumber"></el-input>
                   </el-form-item>
                   <el-form-item label="生日">
                     <el-date-picker v-model="form.date" type="date" style="width: 100%"></el-date-picker>
                   </el-form-item>
                   <el-form-item label="学历">
-                    <el-select v-model="form.education" style="width: 100%">
+                    <el-select v-model="education" style="width: 100%">
                       <el-option label="本科在读" value="shanghai"></el-option>
                       <el-option label="研究生在读" value="beijing"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="学校名称">
-                    <el-input v-model="form.school"></el-input>
+                    <el-input v-model="school"></el-input>
                   </el-form-item>
                   <el-form-item label="学号">
-                    <el-input v-model="form.studentNo"></el-input>
+                    <el-input v-model="studentNo"></el-input>
                   </el-form-item>
                   <el-form-item label="户籍">
-                    <el-input v-model="form.location"></el-input>
+                    <el-input v-model="location"></el-input>
                   </el-form-item>
                   <el-form-item label="当前住址">
                     <el-input v-model="address"></el-input>
@@ -267,17 +270,15 @@
           //修改信息 name=5
           form: {
             sex: '1',
-            company: '',
             date: new Date,
-            education: '',
-            location: '',
-            realName: '',
-            school: '',
-            studentNo: '',
-            idNumber: '',
           },
-
-
+          company: '',
+          education: '',
+          location: '',
+          realName: '',
+          school: '',
+          studentNo: '',
+          idNumber: '',
         };
       },
       created() {

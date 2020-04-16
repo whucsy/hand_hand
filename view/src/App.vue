@@ -258,13 +258,13 @@
         var date = new Date();
         date.setTime(date.getTime() - 10000);
         var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
-        console.log("需要删除的cookie名字：" + keys);
+        // console.log("需要删除的cookie名字：" + keys);
         if (keys) {
           for (var i = keys.length; i--;) {
             document.cookie = keys[i] + "=; expire=" + date.toGMTString() + "; path=/";
           }
         }
-        console.log(document.cookie);
+        // console.log(document.cookie);
       },
       //注册
       register() {
