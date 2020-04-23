@@ -71,7 +71,20 @@ public class MissionService {
         return missionRepository.findByKey(pageable,key);
     }
 
-
+    //按属性排序并分页
+    public List<Mission> sort(Integer page, Integer size,String property,Boolean desc){
+        if(page == null){
+            page = 0;
+        }
+        if (desc) {
+            PageRequest pageable = PageRequest.of(page, size, Sort.Direction.DESC, property);
+            return missionRepository.findByPage(pageable);
+        }
+        else {
+            PageRequest pageable = PageRequest.of(page, size, Sort.Direction.ASC, property);
+            return missionRepository.findByPage(pageable);
+        }
+    }
 
 
 }

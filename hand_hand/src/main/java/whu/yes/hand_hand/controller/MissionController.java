@@ -138,4 +138,25 @@ public class MissionController {
         return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
+    @GetMapping(value = "/sort")
+    @ApiOperation(
+            value = "按属性给任务排序",
+            notes = "按属性给任务排序，择升序或者降序"
+    )
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "页数", name = "page",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(value = "每页大小", name = "size",paramType = "query",dataType = "int"),
+            @ApiImplicitParam(value = "属性", name = "property",paramType = "query",dataType = "String"),
+            @ApiImplicitParam(value = "是否降序", name = "desc",paramType = "query",dataType = "Boolean"),
+    }
+    )
+    public Status sort(@RequestParam("page")Integer page,
+                            @RequestParam(value = "size",defaultValue = "10") Integer size,
+                            @RequestParam("property") String property,@RequestParam("desc") Boolean desc){
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("value",missionService.sort(page-1,size,property,desc));
+        return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
+    }
+
 }
