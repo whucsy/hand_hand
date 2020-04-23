@@ -22,7 +22,6 @@ public class UserAccountService {
 
     private Map<String, UserDetails> tokenMap = new HashMap<>();
 
-
     @Cacheable("user")
     public UserDetails getUserFromToken(String token) {
         if(token == null) {

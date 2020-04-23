@@ -53,6 +53,7 @@ public class ReceiveListService {
     public void insertCompetitor(int uid,int mid){
         Mission mission = missionRepository.findById(mid).get();
         if(mission.getState() == 0){
+            //修改任务状态为竞选中
             mission.setState(1);
             missionRepository.save(mission);
         }

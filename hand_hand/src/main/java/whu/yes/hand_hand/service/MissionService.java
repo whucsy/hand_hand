@@ -32,7 +32,6 @@ public class MissionService {
         return missionRepository.findByUid(uid);
     }
 
-
     //新增一个任务
     public void insertMission(Mission mission){
         mission.setPublishTime(DateUtil.getDate());
