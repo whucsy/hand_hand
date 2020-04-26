@@ -48,12 +48,26 @@
           </div>
         </div>
 </span>
+<div>
+<el-pagination
+  background
+  layout="prev, pager, next"
+  :total="700">
+</el-pagination>
+</div>
       </el-main>
     </el-container>
+
     <!--   天梯排行-->
     <el-container>
-      <el-footer style="background-color: #E9EEF3;text-align: center;line-height: 160px;height:160px">
-        <el-avatar icon="el-icon-user-solid" :size="50"></el-avatar>
+      <el-footer style="background-color: #E9EEF3;height:200px">
+<div style="text-align: left;font-size:30px">天梯排行</div>
+<span class="rank" v-for="item in rankInfo">
+<div style="text-align: center;line-height: 160px;margin:10px 25px 10px 25px;">
+<div><el-avatar v-bind:src="item.icon" :size="100"></el-avatar></div>
+<div>{{ item.userName }}</div>
+</div>
+</span>
       </el-footer>
     </el-container>
   </div>
@@ -87,12 +101,15 @@
         checked2: false,
         token: null,
         mNumber: null,
+        rankInfo:null,
       };
     },
     mounted() {
       this.getMission();
+      this.getRank();
     },
     methods: {
+    //获取全部任务
       getMission() {
         this.$axios
           .get('/api/mission')
@@ -107,6 +124,24 @@
           .catch(failResponse => {
           })
       },
+  //获取积分排行
+  getRank() {
+  this.$axios
+  .get('/api/userAccount/ranks', {
+  params: {
+  size: 6
+  }
+  })
+  .then(successResponse => {
+  console.log(successResponse);
+  //console.log("1");
+  this.rankInfo = successResponse.data;
+  //console.log(this.rankInfo);
+  })
+  .catch(failResponse => {
+  })
+  },
+
     },
   }
 </script>
@@ -122,6 +157,9 @@
   }
 
   span.mission div {
+    float: left;
+  }
+  span.rank div {
     float: left;
   }
 
