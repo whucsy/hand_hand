@@ -13,14 +13,11 @@
       </el-main>
     </el-container>
 
-
     <el-container>
       <!--       左侧导航栏-->
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-openeds="['1', '3']">
-          <el-menu-item v-for="(item,i) in navList" :key="i">{{ item.name}}</el-menu-item>
-
-
+        <el-menu default-active="推荐" @select="selectItems">
+          <el-menu-item v-for="item in navList" :key="item.name" :index="item.name">{{ item.name}}</el-menu-item>
         </el-menu>
       </el-aside>
 
@@ -31,6 +28,7 @@
           <el-checkbox v-model="checked2">酬金最高</el-checkbox>
         </div>
         <!--       任务浏览-->
+<div>
         <span class="mission" v-for="n in mNumber">
         <div
           style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px;margin-right:15px">
@@ -48,11 +46,12 @@
           </div>
         </div>
 </span>
+</div>
+<!--       分页-->
 <div>
-<el-pagination
-  background
-  layout="prev, pager, next"
-  :total="700">
+<el-pagination  @current-change="handleCurrentChange"
+  background  layout="prev, pager, next" :current-page="currentPage"
+  :total="total" hide-on-single-page>
 </el-pagination>
 </div>
       </el-main>
@@ -63,7 +62,7 @@
       <el-footer style="background-color: #E9EEF3;height:200px">
 <div style="text-align: left;font-size:30px">天梯排行</div>
 <span class="rank" v-for="item in rankInfo">
-<div style="text-align: center;line-height: 160px;margin:10px 25px 10px 25px;">
+<div style="text-align: center;line-height: 160px;margin:15px 25px 10px 25px;">
 <div><el-avatar v-bind:src="item.icon" :size="100"></el-avatar></div>
 <div>{{ item.userName }}</div>
 </div>
@@ -102,11 +101,15 @@
         token: null,
         mNumber: null,
         rankInfo:null,
-      };
+  currentPage: 1,
+  total:100,
+  label:null,
+  };
     },
     mounted() {
-      this.getMission();
+      //this.getMission();
       this.getRank();
+      this.getMissionInfo();
     },
     methods: {
     //获取全部任务
@@ -118,7 +121,7 @@
             if (successResponse.data.statusCode === 200) {
               this.token = successResponse;
               this.mNumber = Object.keys(successResponse.data.data.value).length;
-              console.log(this.token);
+              //console.log(this.token);
             }
           })
           .catch(failResponse => {
@@ -133,15 +136,54 @@
   }
   })
   .then(successResponse => {
-  console.log(successResponse);
+  //console.log(successResponse);
   //console.log("1");
   this.rankInfo = successResponse.data;
   //console.log(this.rankInfo);
   })
   .catch(failResponse => {
+
+  })
+  },
+  handleCurrentChange(val) {
+  this.currentPage = val;
+  console.log(this.currentPage);
+  this.getMissionInfo();
+  },
+  //分页查询任务
+  getMissionInfo() {
+  this.$axios
+  .get('/api/mission/page', {
+  params: {
+  page:this.currentPage,
+  size:6,
+  label:this.label,
+  }
+  })
+  .then(successResponse => {
+  console.log(successResponse);
+  if (successResponse.data.statusCode === 200) {
+  this.token = successResponse;
+  this.mNumber = Object.keys(successResponse.data.data.value).length;
+  //console.log(this.token);
+  }
+  })
+  .catch(failResponse => {
   })
   },
 
+  selectItems(index){
+  console.log(index);
+  this.currentPage = 1;
+  if(index=='推荐'){
+    //console.log('进入推荐选项');
+    this.label = null;
+  }else{
+  this.label = index;
+  }
+  //console.log(this.label);
+  this.getMissionInfo();
+  },
     },
   }
 </script>
