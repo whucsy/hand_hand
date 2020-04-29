@@ -7,6 +7,7 @@ import PostMission from "../components/PostMission";
 import searchResult from "../components/searchResult";
 Vue.use(Router);
 
+
 export default new Router({
   routes: [
     {

@@ -28,7 +28,7 @@
           <el-checkbox v-model="checked2">酬金最高</el-checkbox>
         </div>
         <!--       任务浏览-->
-<div>
+        <div>
         <span class="mission" v-for="n in mNumber">
         <div
           style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px;margin-right:15px">
@@ -47,13 +47,11 @@
         </div>
 </span>
 </div>
-<!--       分页-->
-<div>
-<el-pagination  @current-change="handleCurrentChange"
-  background  layout="prev, pager, next" :current-page="currentPage"
-  :total="total" hide-on-single-page>
-</el-pagination>
-</div>
+        <!--       分页-->
+        <el-pagination  @current-change="handleCurrentChange"
+          background  layout="prev, pager, next" :current-page="currentPage"
+          :total="total" hide-on-single-page style="white-space:normal;">
+        </el-pagination>
       </el-main>
     </el-container>
 

@@ -198,7 +198,7 @@
         this.$refs[formName].resetFields();
       },
       getResult() {
-        this.$router.push({path: '/components/searchResult',name:'searchResult',params:{name:'name',input:this.input,select:this.select}});
+        this.$router.push({path: '/components/searchResult',name:'searchResult',params:{name:'name',input:this.input,select:this.select}})
       },
       //登录
       login() {
