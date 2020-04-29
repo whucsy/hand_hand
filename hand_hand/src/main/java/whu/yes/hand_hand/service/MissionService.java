@@ -54,7 +54,7 @@ public class MissionService {
             page = 0;
         }
         PageRequest pageable = PageRequest.of(page, size, Sort.Direction.DESC, "publishTime");
-        if (null == label) {
+        if (label.equals("all")) {
             return missionRepository.findByPage(pageable);
         }
         else {
