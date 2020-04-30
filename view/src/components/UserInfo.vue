@@ -78,15 +78,19 @@
                         <div style="width:43%;background-color: rgb(247, 247, 255);text-align: left;height:100px;margin-top:15px;margin-left:20px">
                             <el-col :span="20">
                               <div>
+                                <!--                                标题-->
                                 <div style="margin-top: 10px;width: 98%;height: 25px;margin-left: 10px">
-                                  <span style="font-size: 20px"><b>超级超级标题</b></span>
+                                  <span style="font-size: 20px"><b>{{myPublish.value[n-1].mtitle | ellipsis}}</b></span>
                                 </div>
+                                <!--                                详细信息-->
                                 <div style="margin-left:10px;width: 98%;margin-top: 10px">
-                                    <span style="font-size: 14px">详细描述</span>
+                                    <span style="font-size: 14px">{{myPublish.value[n-1].missionInfo | ellipsis}}</span>
                                 </div>
                                 <div style="margin-left: 10px;margin-top: 10px;font-size: x-small;color: #606266">
-                                  <span >2020-4-15</span>
-                                  <i class="el-icon-coin" style="margin-right:5px;margin-left: 50px">酬金</i>
+                                  <!--                                发布日期-->
+                                  <span >{{myPublish.value[n-1].publishTime}}</span>
+                                  <!--                                  酬金-->
+                                  <i class="el-icon-coin" style="margin-right:5px;margin-left: 50px">{{myPublish.value[n-1].money}}</i>
                                 </div>
                               </div>
                             </el-col>
@@ -125,7 +129,7 @@
                     </el-tab-pane>
 <!--                    我收藏的任务-->
                     <el-tab-pane label="收藏" name="third">
-                      <span class="mission" v-for="n in publishCount">
+                      <span class="mission" v-for="n in collectionCount">
                         <div style="width:43%;background-color: rgb(247, 247, 255);text-align: left;height:100px;margin-top:15px;margin-left:20px">
                           <el-col :span="6" style="margin-top: 25px">
                             <el-avatar :src="icon" :fit="fit" :size="60" style="margin-left: 10px"></el-avatar>
@@ -133,14 +137,14 @@
                           <el-col :span="16">
                               <div>
                                 <div style="margin-top: 10px;width: 98%;height: 25px;margin-left: 10px">
-                                  <span style="font-size: 20px"><b>超级超级标题</b></span>
+                                  <span style="font-size: 20px"><b>{{myCollection.value[n-1].mtitle | ellipsis}}</b></span>
                                 </div>
                                 <div style="margin-left:10px;width: 98%;margin-top: 10px">
-                                    <span style="font-size: 14px">详细描述</span>
+                                    <span style="font-size: 14px">{{myCollection.value[n-1].missionInfo | ellipsis}}</span>
                                 </div>
                                 <div style="margin-left: 10px;margin-top: 10px;font-size: x-small;color: #606266">
-                                  <span >2020-4-15</span>
-                                  <i class="el-icon-coin" style="margin-right:5px;margin-left: 50px">酬金</i>
+                                  <span >{{myCollection.value[n-1].publishTime}}</span>
+                                  <i class="el-icon-coin" style="margin-right:5px;margin-left: 50px">{{myCollection.value[n-1].money}}</i>
                                 </div>
                               </div>
                             </el-col>
@@ -155,6 +159,7 @@
               </el-container>
             </div>
           </el-tab-pane>
+
 <!--          <el-tab-pane label="我的收藏" name="2" >角色管理</el-tab-pane>-->
           <el-tab-pane label="积分中心" name="3">定时任务补偿</el-tab-pane>
           <el-tab-pane label="我的钱包" name="4">定时任务补偿</el-tab-pane>
@@ -265,7 +270,16 @@
 
           //我的任务 name=1
           activeName_1: 'first',
-          publishCount: 2,
+          publishCount: null,
+          myPublish: null,
+
+          receiveCount: null,
+          myReceive: null,
+
+          collectionCount: null,
+          myCollection: null,
+
+
 
           //修改信息 name=5
           form: {
@@ -282,18 +296,25 @@
         };
       },
       created() {
-          // this.createUserInfo();
           this.getUserInfoById();
           this.getCountInfoByToken();
       },
       mounted() {
-        this.getMyPublish();
+          this.getMyPublish();
+          this.getMyCollection();
       },
+               //过滤器限制长度
+          filters: {
+    ellipsis (value) {
+      if (!value) return '';
+      if (value.length > 10) {
+        return value.slice(0,10) + '...'
+      }
+      return value
+    }
+  },
 
       methods: {
-        handleSelect(key, keyPath) {
-          console.log(key, keyPath);
-        },
         handleClick(tab,event) {
         },
 
@@ -417,6 +438,7 @@
               alert("修改成功");
               this.activeName='0';
               this.getCountInfoByToken();
+              // app.showLogin = this.userName;
             }
           })
           .catch(failResponse=>{
@@ -426,7 +448,43 @@
 
         //我的发布 name=1
         getMyPublish(){
-
+          this.$axios
+          .get('/api/mission/uid',{
+            params:{
+              uid: this.getCookie('uid')
+            }
+          })
+          .then(successRespond => {
+            if(successRespond.data.statusCode === 200){
+              console.log("我的发布");
+              if(successRespond.data.data.value !== null){
+                this.publishCount = successRespond.data.data.value.length;
+                this.myPublish = successRespond.data.data;
+              }else{
+                this.publishCount = 0;
+              }
+            }
+          })
+        },
+        //我收藏的任务
+        getMyCollection(){
+          this.$axios
+          .get('/api/saveList/uid',{
+            params:{
+              uid: this.getCookie('uid')
+            }
+          })
+          .then(successRespond => {
+            if(successRespond.data.statusCode === 200){
+              console.log("我的收藏");
+              if(successRespond.data.data.value !== null){
+                this.collectionCount = successRespond.data.data.value.length;
+                this.myCollection = successRespond.data.data;
+              }else{
+                this.collectionCount = 0;
+              }
+            }
+          })
         },
 
         //修改信息 name=5
