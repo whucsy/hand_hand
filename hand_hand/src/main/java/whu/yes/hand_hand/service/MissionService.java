@@ -72,17 +72,25 @@ public class MissionService {
     }
 
     //按属性排序并分页
-    public List<Mission> sort(Integer page, Integer size,String property,Boolean desc){
+    public List<Mission> sort(Integer page, Integer size,String property,Boolean desc,String label){
         if(page == null){
             page = 0;
         }
-        if (desc) {
+        if (label.equals("all") && desc) {
             PageRequest pageable = PageRequest.of(page, size, Sort.Direction.DESC, property);
             return missionRepository.findByPage(pageable);
         }
-        else {
+        else if(label.equals("all") && !desc){
             PageRequest pageable = PageRequest.of(page, size, Sort.Direction.ASC, property);
             return missionRepository.findByPage(pageable);
+        }
+        else if(desc){
+            PageRequest pageable = PageRequest.of(page, size, Sort.Direction.DESC, property);
+            return missionRepository.findByPageAndLabel(pageable,label);
+        }
+        else {
+            PageRequest pageable = PageRequest.of(page, size, Sort.Direction.ASC, property);
+            return missionRepository.findByPageAndLabel(pageable,label);
         }
     }
 

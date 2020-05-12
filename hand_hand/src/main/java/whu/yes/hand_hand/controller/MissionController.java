@@ -148,14 +148,15 @@ public class MissionController {
             @ApiImplicitParam(value = "每页大小", name = "size",paramType = "query",dataType = "int"),
             @ApiImplicitParam(value = "属性", name = "property",paramType = "query",dataType = "String"),
             @ApiImplicitParam(value = "是否降序", name = "desc",paramType = "query",dataType = "Boolean"),
+            @ApiImplicitParam(value = "标签", name = "label",paramType = "query"),
     }
     )
     public Status sort(@RequestParam("page")Integer page,
                             @RequestParam(value = "size",defaultValue = "10") Integer size,
-                            @RequestParam("property") String property,@RequestParam("desc") Boolean desc){
+                            @RequestParam("property") String property,@RequestParam("desc") Boolean desc,@RequestParam("label")String label){
 
         Map<String,Object> data = new HashMap<>();
-        data.put("value",missionService.sort(page-1,size,property,desc));
+        data.put("value",missionService.sort(page-1,size,property,desc,label));
         return new Status(true,StatusCode.getCode("SUCCESS"),data,StatusCode.getMsg("SUCCESS"));
     }
 
