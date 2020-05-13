@@ -31,13 +31,13 @@
 <div>
         <span class="mission" v-for="n in mNumber">
         <div
-          style="width:400px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px;margin-right:15px">
+          style="width:300px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px;margin-right:15px">
           <div>
             <span style="font-size: 20px;margin-left:10px;">{{ token.data.data.value[n-1].mtitle }}</span>
             <i class="el-icon-coin" style="margin-right:15px">{{ token.data.data.value[n-1].money }}</i>
           </div>
           <div
-            style="width:380px;border-radius: 4px;background-color: rgb(255, 255, 255);margin-left:10px;margin-right:10px;margin-top:10px;height:155px">
+            style="width:280px;border-radius: 4px;background-color: rgb(255, 255, 255);margin-left:10px;margin-right:10px;margin-top:10px;height:155px">
               {{ token.data.data.value[n-1].missionInfo }}
           </div>
           <div style="align-items:center; display: -webkit-flex;">
@@ -48,12 +48,12 @@
 </span>
 </div>
 <!--       分页-->
-<div>
-<el-pagination  @current-change="handleCurrentChange"
-  background  layout="prev, pager, next" :current-page="currentPage"
-  :total="total" hide-on-single-page style="white-space:normal">
-</el-pagination>
-</div>
+<!--  <div> -->
+<!--  <el-pagination  @current-change="handleCurrentChange" -->
+<!--  background  layout="prev, pager, next" :current-page="currentPage" -->
+<!--  :total="total" hide-on-single-page style="white-space:normal"> -->
+<!-- </el-pagination> -->
+<!-- </div> -->
       </el-main>
     </el-container>
 
