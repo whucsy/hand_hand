@@ -329,7 +329,7 @@
             .then(successResponse => {
               if (successResponse.status === 200) {
                 this.balance = successResponse.data.balance;
-                // this.icon = successResponse.data.icon;
+                this.icon = successResponse.data.icon;
                 this.level = successResponse.data.level;
                 this.motto = successResponse.data.motto;
                 this.phoneNumber = successResponse.data.phoneNumber;
