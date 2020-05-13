@@ -10,31 +10,34 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-
 @SpringBootTest//运行测试时，启动springboot
 @AutoConfigureMockMvc
-class MissionControllerTest {
+class ReceiveListControllerTest {
 
     @Autowired
     private MockMvc mockMvc;//模拟用代码发送http
 
     @Test
-    void findByPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/mission/page")
-                .param("page","1")
-                .param("size","3")
-                .param("label","all"))
+    void getReceiveListById() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/receiveList/id")
+                .param("id","19"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());//200
     }
 
     @Test
-    void findByKey() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/mission/key")
-                .param("page","1")
-                .param("size","3")
-                .param("key","python"))
+    void insertCompetitor() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/receiveList/compete")
+                .param("mid","10")
+                .param("uid","15"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());//200
+    }
+
+    @Test
+    void findCompetitor() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/receiveList/competitor")
+                .param("mid","10"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());//200
     }

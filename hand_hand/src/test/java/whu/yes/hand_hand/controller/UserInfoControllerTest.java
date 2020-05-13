@@ -11,30 +11,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest//运行测试时，启动springboot
 @AutoConfigureMockMvc
-class MissionControllerTest {
-
+class UserInfoControllerTest {
     @Autowired
     private MockMvc mockMvc;//模拟用代码发送http
 
     @Test
-    void findByPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/mission/page")
-                .param("page","1")
-                .param("size","3")
-                .param("label","all"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());//200
-    }
-
-    @Test
-    void findByKey() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/mission/key")
-                .param("page","1")
-                .param("size","3")
-                .param("key","python"))
+    void getAllUserInfo() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/userInfo"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());//200
     }
