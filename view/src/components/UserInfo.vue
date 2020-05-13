@@ -255,7 +255,7 @@
 
           //账号资料 name=0
           fit: 'contain',
-          icon: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+          icon: '../static/head/h1.jpg//',//https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
           age: '',
           sex: '女',
           motto: '',
