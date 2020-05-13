@@ -126,7 +126,7 @@
       var token = "";
       return {
         fit: 'contain',
-        imageScr:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+        imageScr: "../static/head/h1.jpg",//'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
         labelPosition: 'top',
         loginFormVisible: false,
         showLogin: this.getCookie('userName'),
@@ -240,6 +240,7 @@
               // this.setCookie('userName',successResponse.data.userName,expiredays);
               //更新导航栏
               this.showLogin=successResponse.data.userName;//this.getCookie('userName');
+              this.imageScr=successResponse.data.icon;
             }
           })
       },
