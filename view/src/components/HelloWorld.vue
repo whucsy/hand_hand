@@ -5,8 +5,8 @@
       <el-main>
         <div class="block">
           <el-carousel height="150px">
-            <el-carousel-item v-for="item in 4" :key="item">
-              <h3 class="small">{{ item }}</h3>
+            <el-carousel-item v-for="item in imagesbox" :key="item.id">
+<img :src="item.idView" class="image">
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -96,6 +96,12 @@
           {name: '书法'},
           {name: '外语'},
         ],
+  imagesbox: [
+  {id:0,idView:require("../assets/1.jpg")},
+  {id:1,idView:require("../assets/2.jpg")},
+  {id:2,idView:require("../assets/3.jpg")},
+  {id:2,idView:require("../assets/4.jpg")},
+  ],
         checked1: false,
         checked2: false,
         token: null,
@@ -103,7 +109,7 @@
         rankInfo:null,
   currentPage: 1,
   total:100,
-  label:null,
+  label:'all',
   };
     },
     mounted() {
@@ -177,7 +183,7 @@
   this.currentPage = 1;
   if(index=='推荐'){
     //console.log('进入推荐选项');
-    this.label = null;
+    this.label = 'all';
   }else{
   this.label = index;
   }
