@@ -6,7 +6,7 @@
         <div class="block">
           <el-carousel height="150px">
             <el-carousel-item v-for="item in imagesbox" :key="item.id">
-<img :src="item.idView" class="image">
+              <img :src="item.idView" class="image">
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -28,10 +28,9 @@
           <el-checkbox v-model="checked2">酬金最高</el-checkbox>
         </div>
         <!--       任务浏览-->
-<div>
+        <div>
         <span class="mission" v-for="n in mNumber">
-        <div
-          style="width:300px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px;margin-right:15px">
+        <div style="width:300px;border-radius: 4px;background-color: rgb(238, 241, 246);text-align: left;height:250px;margin-top:15px;margin-right:15px">
           <div>
             <span style="font-size: 20px;margin-left:10px;">{{ token.data.data.value[n-1].mtitle }}</span>
             <i class="el-icon-coin" style="margin-right:15px">{{ token.data.data.value[n-1].money }}</i>
@@ -41,27 +40,27 @@
               {{ token.data.data.value[n-1].missionInfo }}
           </div>
           <div style="align-items:center; display: -webkit-flex;">
-            <span><el-avatar style="margin-top:10px;margin-left:10px"> user </el-avatar></span>
-            <span style="margin-left:10px;">{{ token.data.data.value[n-1].uid }}</span>
+            <span><el-avatar :src="token.data.data.value[n-1].icon" style="margin-top:10px;margin-left:10px"></el-avatar></span>
+            <span style="margin-left:10px;">{{ token.data.data.value[n-1].userName }}</span>
           </div>
         </div>
 </span>
-</div>
-<!--       分页-->
-<!--  <div> -->
-<!--  <el-pagination  @current-change="handleCurrentChange" -->
-<!--  background  layout="prev, pager, next" :current-page="currentPage" -->
-<!--  :total="total" hide-on-single-page style="white-space:normal"> -->
-<!-- </el-pagination> -->
-<!-- </div> -->
+        </div>
+        <!--       分页-->
+        <!--  <div> -->
+        <!--  <el-pagination  @current-change="handleCurrentChange" -->
+        <!--  background  layout="prev, pager, next" :current-page="currentPage" -->
+        <!--  :total="total" hide-on-single-page style="white-space:normal"> -->
+        <!-- </el-pagination> -->
+        <!-- </div> -->
       </el-main>
     </el-container>
 
     <!--   天梯排行-->
     <el-container>
       <el-footer style="background-color: #E9EEF3;height:200px">
-<div style="text-align: left;font-size:30px">天梯排行</div>
-<span class="rank" v-for="item in rankInfo">
+        <div style="text-align: left;font-size:30px">天梯排行</div>
+        <span class="rank" v-for="item in rankInfo">
 <div style="text-align: center;line-height: 160px;margin:15px 25px 10px 25px;">
 <div><el-avatar v-bind:src="item.icon" :size="100"></el-avatar></div>
 <div>{{ item.userName }}</div>
@@ -96,22 +95,22 @@
           {name: '书法'},
           {name: '外语'},
         ],
-  imagesbox: [
-  {id:0,idView:require("../assets/1.jpg")},
-  {id:1,idView:require("../assets/2.jpg")},
-  {id:2,idView:require("../assets/3.jpg")},
-  {id:3,idView:require("../assets/4.jpg")},
-  ],
+        imagesbox: [
+          {id: 0, idView: require("../assets/1.jpg")},
+          {id: 1, idView: require("../assets/2.jpg")},
+          {id: 2, idView: require("../assets/3.jpg")},
+          {id: 3, idView: require("../assets/4.jpg")},
+        ],
         checked1: false,
         checked2: false,
         token: null,
         mNumber: null,
-        rankInfo:null,
+        rankInfo: null,
         icon: null,
-  currentPage: 1,
-  total:100,
-  label:'all',
-  };
+        currentPage: 1,
+        total: 100,
+        label: 'all',
+      };
     },
     mounted() {
       //this.getMission();
@@ -119,7 +118,7 @@
       this.getMissionInfo();
     },
     methods: {
-    //获取全部任务
+      //获取全部任务
       getMission() {
         this.$axios
           .get('/api/mission')
@@ -134,63 +133,63 @@
           .catch(failResponse => {
           })
       },
-  //获取积分排行
-  getRank() {
-  this.$axios
-  .get('/api/userAccount/ranks', {
-  params: {
-  size: 6
-  }
-  })
-  .then(successResponse => {
-  //console.log(successResponse);
-  //console.log("1");
-  this.rankInfo = successResponse.data;
-  //console.log(this.rankInfo);
-  })
-  .catch(failResponse => {
+      //获取积分排行
+      getRank() {
+        this.$axios
+          .get('/api/userAccount/ranks', {
+            params: {
+              size: 6
+            }
+          })
+          .then(successResponse => {
+            //console.log(successResponse);
+            //console.log("1");
+            this.rankInfo = successResponse.data;
+            //console.log(this.rankInfo);
+          })
+          .catch(failResponse => {
 
-  })
-  },
-  handleCurrentChange(val) {
-  this.currentPage = val;
-  console.log(this.currentPage);
-  this.getMissionInfo();
-  },
-  //分页查询任务
-  getMissionInfo() {
-  this.$axios
-  .get('/api/mission/page', {
-  params: {
-  page:this.currentPage,
-  size:6,
-  label:this.label,
-  }
-  })
-  .then(successResponse => {
-  console.log(successResponse);
-  if (successResponse.data.statusCode === 200) {
-  this.token = successResponse;
-  this.mNumber = Object.keys(successResponse.data.data.value).length;
-  //console.log(this.token);
-  }
-  })
-  .catch(failResponse => {
-  })
-  },
+          })
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
+        console.log(this.currentPage);
+        this.getMissionInfo();
+      },
+      //分页查询任务
+      getMissionInfo() {
+        this.$axios
+          .get('/api/mission/page', {
+            params: {
+              page: this.currentPage,
+              size: 6,
+              label: this.label,
+            }
+          })
+          .then(successResponse => {
+            console.log(successResponse);
+            if (successResponse.data.statusCode === 200) {
+              this.token = successResponse;
+              this.mNumber = Object.keys(successResponse.data.data.value).length;
+              //console.log(this.token);
+            }
+          })
+          .catch(failResponse => {
+          })
+      },
 
-  selectItems(index){
-  console.log(index);
-  this.currentPage = 1;
-  if(index=='推荐'){
-    //console.log('进入推荐选项');
-    this.label = 'all';
-  }else{
-  this.label = index;
-  }
-  //console.log(this.label);
-  this.getMissionInfo();
-  },
+      selectItems(index) {
+        console.log(index);
+        this.currentPage = 1;
+        if (index == '推荐') {
+          //console.log('进入推荐选项');
+          this.label = 'all';
+        } else {
+          this.label = index;
+        }
+        //console.log(this.label);
+        this.getMissionInfo();
+      },
     },
   }
 </script>
@@ -208,6 +207,7 @@
   span.mission div {
     float: left;
   }
+
   span.rank div {
     float: left;
   }
