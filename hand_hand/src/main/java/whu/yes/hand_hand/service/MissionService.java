@@ -6,9 +6,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import whu.yes.hand_hand.entity.Mission;
+import whu.yes.hand_hand.entity.UserAccount;
 import whu.yes.hand_hand.repository.MissionRepository;
+import whu.yes.hand_hand.repository.UserAccountRepository;
+import whu.yes.hand_hand.res.MissionAndUser;
 import whu.yes.hand_hand.util.DateUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +20,8 @@ import java.util.List;
 public class MissionService {
     @Autowired
     private MissionRepository missionRepository;
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
     //查询全部任务
     public List<Mission> getAllMission(){
@@ -49,16 +55,33 @@ public class MissionService {
     }
 
     //分页查找
-    public List<Mission> findByPage(Integer page, Integer size,String label) {
+    public List<MissionAndUser> findByPage(Integer page, Integer size, String label) {
+        List<Mission> missions = new ArrayList<>();
+        List<MissionAndUser> missionAndUsers = new ArrayList<>();
         if(page == null){
             page = 0;
         }
         PageRequest pageable = PageRequest.of(page, size, Sort.Direction.DESC, "publishTime");
         if (label.equals("all")) {
-            return missionRepository.findByPage(pageable);
+
+            missions =  missionRepository.findByPage(pageable);
+            UserAccount userAccount;
+            for (Mission mission : missions){
+                userAccount = userAccountRepository.findById(mission.getUid()).get();
+                MissionAndUser missionAndUser = new MissionAndUser(mission.getMid(),mission.getUid(),mission.getState(),mission.getMTitle(),mission.getPublishTime(),mission.getMissionInfo(),mission.getLabel1(),mission.getLabel2(),mission.getLabel3(),mission.getFileName(),mission.getMoney(),mission.getExistenceDate(),mission.getDeadline(),mission.getPeopleAmount(),mission.getChangeNumber(),userAccount.getPhoneNumber(),userAccount.getPassword(),userAccount.getUserName(),userAccount.getScore(),userAccount.getLevel(),userAccount.getMotto(),userAccount.getBalance(),userAccount.getIcon(),userAccount.getGender(),userAccount.getRole());
+                missionAndUsers.add(missionAndUser);
+            }
+            return missionAndUsers;
         }
         else {
-            return missionRepository.findByPageAndLabel(pageable, label);
+            missions =  missionRepository.findByPageAndLabel(pageable, label);
+            UserAccount userAccount;
+            for (Mission mission : missions){
+                userAccount = userAccountRepository.findById(mission.getUid()).get();
+                MissionAndUser missionAndUser = new MissionAndUser(mission.getMid(),mission.getUid(),mission.getState(),mission.getMTitle(),mission.getPublishTime(),mission.getMissionInfo(),mission.getLabel1(),mission.getLabel2(),mission.getLabel3(),mission.getFileName(),mission.getMoney(),mission.getExistenceDate(),mission.getDeadline(),mission.getPeopleAmount(),mission.getChangeNumber(),userAccount.getPhoneNumber(),userAccount.getPassword(),userAccount.getUserName(),userAccount.getScore(),userAccount.getLevel(),userAccount.getMotto(),userAccount.getBalance(),userAccount.getIcon(),userAccount.getGender(),userAccount.getRole());
+                missionAndUsers.add(missionAndUser);
+            }
+            return missionAndUsers;
         }
     }
 
